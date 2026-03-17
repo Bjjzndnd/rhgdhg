@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام تفعيل الهوية الرقمي - KR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #182552;
+            --primary-dark: #0d1638;
+            --primary-light: #3f51b5;
+            --accent: #ff8c00;
+            --accent-dark: #e46b00;
+            --accent-light: #ffb347;
+
+            --health: #2196f3;
+            --health-dark: #1976d2;
+            --interior: #f44336;
+            --interior-dark: #d32f2f;
+            --justice: #4caf50;
+            --justice-dark: #388e3c;
+
+            --success: #00c853;
+            --warning: #ffd600;
+            --danger: #ff5252;
+            --info: #2196f3;
+
+            --dark: #070b14;
+            --dark-2: #0c1220;
+            --dark-card: rgba(18, 24, 38, 0.78);
+            --light: #ffffff;
+            --gray: #8b949e;
+            --gray-light: #d0d7de;
+
+            --border: rgba(255, 255, 255, 0.10);
+            --border-strong: rgba(255, 255, 255, 0.16);
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-dark: rgba(7, 11, 20, 0.78);
+            --shadow: 0 10px 35px rgba(0, 0, 0, 0.28);
+            --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.42);
+
+            --gradient-primary: linear-gradient(135deg, #182552 0%, #30459a 100%);
+            --gradient-accent: linear-gradient(135deg, #ff8c00 0%, #ffb347 100%);
+            --gradient-health: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            --gradient-interior: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+            --gradient-justice: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+            --gradient-citizen: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+            --gradient-dark:
+                radial-gradient(circle at top right, rgba(255, 140, 0, 0.08), transparent 25%),
+                radial-gradient(circle at bottom left, rgba(63, 81, 181, 0.16), transparent 30%),
+                linear-gradient(145deg, #050812 0%, #0b1324 48%, #111c35 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Cairo', 'Tajawal', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--gradient-dark);
+            min-height: 100vh;
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.18;
+        }
+
+        body::before {
+            width: 320px;
+            height: 320px;
+            top: -80px;
+            right: -60px;
+            background: rgba(255, 140, 0, 0.4);
+        }
+
+        body::after {
+            width: 360px;
+            height: 360px;
+            left: -120px;
+            bottom: -80px;
+            background: rgba(63, 81, 181, 0.45);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1180px;
+            background: var(--glass-dark);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            animation: containerAppear 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(255,255,255,0.03), transparent 20%),
+                linear-gradient(90deg, rgba(255,255,255,0.02), transparent 30%);
+            pointer-events: none;
+        }
+
+        @keyframes containerAppear {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 52px 30px 46px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid var(--accent);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.06) 50%, transparent 70%);
+            animation: headerShine 7s linear infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        @keyframes headerShine {
+            0% { transform: translateX(-110%); }
+            100% { transform: translateX(110%); }
+        }
+
+        .logo-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-icon {
+            width: 102px;
+            height: 102px;
+            margin: 0 auto 24px;
+            background: var(--gradient-accent);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: logoFloat 5.5s ease-in-out infinite;
+            box-shadow: 0 16px 42px rgba(255, 140, 0, 0.34);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 60%);
+        }
+
+        .logo-icon i {
+            font-size: 46px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(4deg); }
+        }
+
+        .logo h1 {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #fff 0%, #ffd28d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        .kr-badge {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            background: var(--gradient-accent);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 13px;
+            animation: badgePulse 3s infinite;
+            box-shadow: 0 8px 24px rgba(255, 140, 0, 0.28);
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 24px rgba(255, 140, 0, 0.28);
+            }
+            50% {
+                transform: scale(1.04);
+                box-shadow: 0 10px 30px rgba(255, 140, 0, 0.38);
+            }
+        }
+
+        .content {
+            padding: 46px 38px;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 38px;
+            margin-bottom: 28px;
+            animation: stepAppear 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(24px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .step:nth-child(1) { animation-delay: 0.08s; }
+        .step:nth-child(2) { animation-delay: 0.15s; }
+        .step:nth-child(3) { animation-delay: 0.22s; }
+        .step:nth-child(4) { animation-delay: 0.29s; }
+        .step:nth-child(5) { animation-delay: 0.36s; }
+
+        @keyframes stepAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .step-title {
+            color: var(--accent-light);
+            margin-bottom: 34px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 25px;
+            color: white;
+            animation: numberGlow 2.8s infinite;
+            box-shadow: 0 10px 28px rgba(255, 140, 0, 0.28);
+            flex-shrink: 0;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { box-shadow: 0 10px 28px rgba(255, 140, 0, 0.28); }
+            50% { box-shadow: 0 14px 34px rgba(255, 140, 0, 0.40); }
+        }
+
+        .input-group {
+            margin-bottom: 28px;
+            position: relative;
+        }
+
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.96);
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .input-group label i {
+            color: var(--accent);
+            font-size: 18px;
+            width: 22px;
+            text-align: center;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(0, 0, 0, 0.22);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.28s ease;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.38);
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent);
+            background: rgba(0, 0, 0, 0.30);
+            box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .char-counter {
+            position: absolute;
+            left: 16px;
+            bottom: 17px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            background: rgba(0, 0, 0, 0.35);
+            padding: 5px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .example-box {
+            margin-top: 14px;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid transparent;
+        }
+
+        .example-box.info {
+            background: rgba(33, 150, 243, 0.10);
+            border-color: rgba(33, 150, 243, 0.20);
+        }
+
+        .example-box.success {
+            background: rgba(76, 175, 80, 0.10);
+            border-color: rgba(76, 175, 80, 0.20);
+        }
+
+        .example-box.warning {
+            background: rgba(255, 152, 0, 0.10);
+            border-color: rgba(255, 152, 0, 0.20);
+        }
+
+        .example-box .head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .example-box.info .head,
+        .example-box.info .head i {
+            color: #56b4ff;
+        }
+
+        .example-box.success .head,
+        .example-box.success .head i {
+            color: #62db8c;
+        }
+
+        .example-box.warning .head,
+        .example-box.warning .head i {
+            color: #ffbf60;
+        }
+
+        .example-box img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.10);
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: block;
+        }
+
+        .example-box img:hover {
+            transform: scale(1.015);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+        }
+
+        .example-box small,
+        .example-box p {
+            display: block;
+            margin-top: 10px;
+            color: var(--gray-light);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+            margin: 34px auto 0;
+            max-width: 800px;
+        }
+
+        .department-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 26px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(8px);
+        }
+
+        .department-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255,255,255,0.03));
+            opacity: 0;
+            transition: opacity 0.28s;
+        }
+
+        .department-card:hover::before {
+            opacity: 1;
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+        }
+
+        .department-card.selected {
+            border-color: var(--accent);
+            background: rgba(255, 140, 0, 0.08);
+            transform: translateY(-5px);
+            box-shadow: 0 16px 36px rgba(255, 140, 0, 0.18);
+        }
+
+        .department-card.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            animation: checkAppear 0.28s ease;
+            box-shadow: 0 4px 12px rgba(255, 140, 0, 0.32);
+        }
+
+        @keyframes checkAppear {
+            from { transform: scale(0) rotate(-180deg); }
+            to { transform: scale(1) rotate(0deg); }
+        }
+
+        .department-icon {
+            width: 74px;
+            height: 74px;
+            margin: 0 auto 18px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+            transition: all 0.28s ease;
+        }
+
+        .department-card:hover .department-icon {
+            transform: scale(1.04);
+        }
+
+        .department-icon i {
+            font-size: 34px;
+            color: white;
+        }
+
+        .health .department-icon { background: var(--gradient-health); }
+        .interior .department-icon { background: var(--gradient-interior); }
+        .justice .department-icon { background: var(--gradient-justice); }
+        .citizen .department-icon { background: var(--gradient-citizen); }
+
+        .department-card h4 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--light);
+        }
+
+        .department-card small {
+            font-size: 13px;
+            color: var(--gray-light);
+            font-weight: 500;
+            display: block;
+            line-height: 1.5;
+        }
+
+        .ranks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 28px;
+            max-height: 540px;
+            overflow-y: auto;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .ranks-grid::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        .ranks-grid::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.22);
+            border-radius: 8px;
+        }
+
+        .ranks-grid::-webkit-scrollbar-thumb {
+            background: var(--gradient-accent);
+            border-radius: 8px;
+        }
+
+        .rank-item {
+            background: rgba(0, 0, 0, 0.22);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 20px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.26s ease;
+            color: rgba(255, 255, 255, 0.93);
+            font-weight: 700;
+            font-size: 15px;
+            position: relative;
+        }
+
+        .rank-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(255, 140, 0, 0.16);
+            background: rgba(255, 140, 0, 0.06);
+        }
+
+        .rank-item.selected {
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.22), rgba(24, 37, 82, 0.34));
+            border-color: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .rank-item.selected::before {
+            content: '\f005';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: var(--accent);
+            font-size: 13px;
+        }
+
+        .additionals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+            margin: 32px 0;
+        }
+
+        .additional-item {
+            background: rgba(0, 0, 0, 0.18);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px 22px;
+            cursor: pointer;
+            transition: all 0.28s ease;
+            position: relative;
+        }
+
+        .additional-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(255, 140, 0, 0.14);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .additional-item.selected {
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.13), rgba(24, 37, 82, 0.24));
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .additional-item.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--accent);
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .additional-item label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.96);
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .additional-item label i {
+            color: var(--accent);
+            font-size: 20px;
+            width: 26px;
+            text-align: center;
+        }
+
+        .additional-item input {
+            display: none;
+        }
+
+        .btn {
+            background: var(--gradient-accent);
+            color: white;
+            border: none;
+            padding: 18px 34px;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.32s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            margin-top: 32px;
+            animation: btnGlow 2.8s infinite;
+            letter-spacing: 0.2px;
+            box-shadow: 0 12px 30px rgba(255, 140, 0, 0.22);
+        }
+
+        @keyframes btnGlow {
+            0%, 100% { box-shadow: 0 12px 30px rgba(255, 140, 0, 0.22); }
+            50% { box-shadow: 0 16px 40px rgba(255, 140, 0, 0.30); }
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(255, 140, 0, 0.30);
+        }
+
+        .btn:active {
+            transform: translateY(-2px);
+        }
+
+        .btn i {
+            font-size: 18px;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            border: 1.5px solid rgba(255, 255, 255, 0.16);
+            animation: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.11);
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.20);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 18px;
+            margin-top: 36px;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            margin-top: 0;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin: 30px 0;
+        }
+
+        .summary-item {
+            background: rgba(0, 0, 0, 0.20);
+            padding: 22px;
+            border-radius: 18px;
+            border-right: 4px solid var(--accent);
+            transition: all 0.25s ease;
+        }
+
+        .summary-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+        }
+
+        .summary-item .label {
+            color: rgba(255, 255, 255, 0.62);
+            font-size: 13px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .summary-item .value {
+            color: white;
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 1.6;
+        }
+
+        .status-message,
+        .alert,
+        .success-message {
+            display: none;
+            padding: 30px;
+            border-radius: 22px;
+            margin-bottom: 28px;
+            text-align: center;
+            animation: messageAppear 0.42s ease;
+            border: 1px solid transparent;
+        }
+
+        .status-message.show,
+        .alert.show,
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.success {
+            background: linear-gradient(135deg, rgba(0, 200, 83, 0.15), rgba(0, 150, 63, 0.15));
+            border-color: rgba(0, 200, 83, 0.35);
+            color: #72f0a0;
+        }
+
+        .alert.warning {
+            background: linear-gradient(135deg, rgba(255, 214, 0, 0.15), rgba(255, 193, 7, 0.12));
+            border-color: rgba(255, 214, 0, 0.28);
+            color: #ffe76b;
+        }
+
+        .alert.danger {
+            background: linear-gradient(135deg, rgba(213, 0, 0, 0.15), rgba(183, 28, 28, 0.12));
+            border-color: rgba(255, 82, 82, 0.28);
+            color: #ff8b8b;
+        }
+
+        .success-message {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--border);
+        }
+
+        .success-message i.fa-check-circle {
+            color: var(--success);
+            filter: drop-shadow(0 0 20px rgba(0, 200, 83, 0.35));
+        }
+
+        .terms-container {
+            background: rgba(255, 140, 0, 0.06);
+            border-radius: 18px;
+            padding: 28px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 140, 0, 0.18);
+        }
+
+        .terms-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .terms-header i {
+            color: var(--accent);
+            font-size: 24px;
+        }
+
+        .terms-header h4 {
+            color: var(--accent-light);
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .term-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.18);
+            border-radius: 14px;
+            transition: all 0.24s ease;
+        }
+
+        .term-item:hover {
+            background: rgba(0, 0, 0, 0.26);
+            transform: translateY(-2px);
+        }
+
+        .term-item input[type="checkbox"] {
+            margin-top: 4px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        .term-item label {
+            color: rgba(255, 255, 255, 0.96);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .file-upload-container {
+            margin-top: 10px;
+        }
+
+        .file-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 34px 24px;
+            background: rgba(0, 0, 0, 0.16);
+            border: 1.8px dashed rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.28s ease;
+            text-align: center;
+        }
+
+        .file-upload-label:hover {
+            background: rgba(0, 0, 0, 0.24);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .file-upload-label i {
+            font-size: 42px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        .file-upload-label span {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--light);
+            margin-bottom: 6px;
+        }
+
+        .file-upload-label small {
+            font-size: 12px;
+            color: var(--gray-light);
+        }
+
+        .image-preview {
+            display: none;
+            margin-top: 18px;
+            position: relative;
+        }
+
+        .image-preview.show {
+            display: block;
+        }
+
+        .image-preview img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            border: 2px solid rgba(255, 140, 0, 0.5);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+        }
+
+        .image-preview .remove-image {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 17px;
+            transition: all 0.25s;
+            box-shadow: 0 6px 14px rgba(255, 82, 82, 0.28);
+        }
+
+        .image-preview .remove-image:hover {
+            background: #ff3030;
+            transform: scale(1.08);
+        }
+
+        .image-preview .image-info {
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(0, 200, 83, 0.10);
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(0, 200, 83, 0.18);
+        }
+
+        .image-preview .image-info i {
+            color: var(--success);
+            margin-left: 8px;
+        }
+
+        .image-preview .image-info span {
+            color: #78e89f;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 14px;
+            }
+
+            .container {
+                max-width: 100%;
+                border-radius: 22px;
+            }
+
+            .header {
+                padding: 36px 18px 34px;
+            }
+
+            .logo h1 {
+                font-size: 28px;
+            }
+
+            .logo-icon {
+                width: 82px;
+                height: 82px;
+                border-radius: 24px;
+            }
+
+            .logo-icon i {
+                font-size: 36px;
+            }
+
+            .kr-badge {
+                top: 14px;
+                left: 14px;
+                padding: 8px 15px;
+                font-size: 11px;
+            }
+
+            .content {
+                padding: 26px 16px;
+            }
+
+            .step {
+                padding: 26px 18px;
+            }
+
+            .step-title {
+                font-size: 22px;
+                gap: 14px;
+            }
+
+            .step-number {
+                width: 52px;
+                height: 52px;
+                border-radius: 16px;
+                font-size: 20px;
+            }
+
+            .departments-grid,
+            .ranks-grid,
+            .additionals-grid,
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .department-icon {
+                width: 66px;
+                height: 66px;
+            }
+
+            .department-icon i {
+                font-size: 30px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 16px 26px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 23px;
+                line-height: 1.4;
+            }
+
+            .step-title {
+                font-size: 19px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .input-group input {
+                padding: 16px 16px;
+                font-size: 15px;
+            }
+
+            .department-card {
+                padding: 22px 16px;
+            }
+
+            .department-card h4 {
+                font-size: 16px;
+            }
+
+            .file-upload-label {
+                padding: 26px 16px;
+            }
+
+            .file-upload-label i {
+                font-size: 36px;
+            }
+
+            .image-preview img,
+            .example-box img {
+                max-width: 100%;
+            }
+
+            .char-counter {
+                position: static;
+                margin-top: 10px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="kr-badge">
+                <i class="fas fa-crown"></i> KR OFFICIAL
+            </div>
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <h1>نظام تفعيل الهوية الرقمي</h1>
+                    <p><i class="fas fa-shield-alt"></i> الجهة الرقمية المسؤولة - KR</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="previousRequestMessage" class="status-message"></div>
+            <div class="alert" id="alertBox"></div>
+
+            <div id="applicationForm" style="display: none;">
+                <div class="step" id="step1">
+                    <div class="step-title">
+                        <div class="step-number">1</div>
+                        <span><i class="fas fa-user-circle"></i> البيانات الأساسية</span>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-user"></i>
+                            <span>الاسم الكامل ثلاثي</span>
+                        </label>
+                        <input type="text" id="fullName" placeholder="مثال: محمد بن فهد الحربي">
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>العمر</span>
+                        </label>
+                        <input type="number" id="age" placeholder="أدخل عمرك (18 سنة فأكثر)" min="18" max="99">
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-gamepad"></i>
+                            <span>اسم المستخدم في اللعبة</span>
+                        </label>
+                        <input type="text" id="gameUsername" placeholder="مثال: Ahmed_KR" dir="ltr">
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fab fa-discord"></i>
+                            <span>اسم المستخدم في الديسكورد</span>
+                        </label>
+                        <input type="text" id="discordUsername" placeholder="مثال: Ahmed#1234" dir="ltr">
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-fingerprint"></i>
+                            <span>رقم الهوية في اللعبة</span>
+                        </label>
+                        <input type="text" id="gameId" placeholder="أدخل 10 أرقام فقط"
+                               maxlength="10" dir="ltr" oninput="validateGameId(this)">
+                        <div class="char-counter" id="gameIdCounter">0/10</div>
+
+                        <div class="example-box info">
+                            <div class="head">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>مثال على رقم الهوية المطلوب:</strong>
+                            </div>
+                            <a href="https://image2url.com/r2/default/images/1769805384049-10717217-5fab-4b62-a7c3-63bf1ced898c.jpeg" target="_blank">
+                                <img src="https://image2url.com/r2/default/images/1769805384049-10717217-5fab-4b62-a7c3-63bf1ced898c.jpeg" alt="مثال رقم الهوية">
+                            </a>
+                            <small><i class="fas fa-mouse-pointer"></i> اضغط على الصورة لعرضها بحجم أكبر</small>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-id-card"></i>
+                            <span>قم بإرفاق هويتك الوطنية داخل اللعبة</span>
+                        </label>
+                        <div class="file-upload-container">
+                            <input type="file" id="nationalIdImage" accept="image/*" onchange="handleImageUpload(this, 'nationalIdPreview')" style="display: none;">
+                            <label for="nationalIdImage" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>اضغط لاختيار الصورة</span>
+                                <small>PNG, JPG, JPEG (الحد الأقصى: 5MB)</small>
+                            </label>
+                            <div id="nationalIdPreview" class="image-preview"></div>
+                        </div>
+
+                        <div class="example-box success">
+                            <div class="head">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>مثال على الصورة المطلوبة:</strong>
+                            </div>
+                            <a href="https://image2url.com/r2/default/images/1769805658220-13fbc5c4-b22b-4b75-81cf-9d53e13bb9e1.jpeg" target="_blank">
+                                <img src="https://image2url.com/r2/default/images/1769805658220-13fbc5c4-b22b-4b75-81cf-9d53e13bb9e1.jpeg" alt="مثال الهوية الوطنية">
+                            </a>
+                            <small><i class="fas fa-mouse-pointer"></i> اضغط على الصورة لعرضها بحجم أكبر</small>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>
+                            <i class="fas fa-camera"></i>
+                            <span>قم بتصوير شخصيتك داخل اللعبة</span>
+                        </label>
+                        <div class="file-upload-container">
+                            <input type="file" id="characterImage" accept="image/*" onchange="handleImageUpload(this, 'characterPreview')" style="display: none;">
+                            <label for="characterImage" class="file-upload-label">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>اضغط لاختيار الصورة</span>
+                                <small>PNG, JPG, JPEG (الحد الأقصى: 5MB)</small>
+                            </label>
+                            <div id="characterPreview" class="image-preview"></div>
+                        </div>
+
+                        <div class="example-box warning">
+                            <div class="head">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <strong>تنبيه مهم:</strong>
+                            </div>
+                            <p>
+                                <i class="fas fa-ban" style="color:#f44336;"></i>
+                                يُمنع استخدام الإكسسوارات أو القبعات في الصورة
+                            </p>
+                            <div class="head" style="margin-top:12px;">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>مثال على الصورة المطلوبة:</strong>
+                            </div>
+                            <a href="https://image2url.com/r2/default/images/1769805924361-f7311e74-b60a-4726-b2e8-8e8678948984.jpeg" target="_blank">
+                                <img src="https://image2url.com/r2/default/images/1769805924361-f7311e74-b60a-4726-b2e8-8e8678948984.jpeg" alt="مثال صورة الشخصية">
+                            </a>
+                            <small><i class="fas fa-mouse-pointer"></i> اضغط على الصورة لعرضها بحجم أكبر</small>
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="validateStep1()">
+                        <span>التالي</span>
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+
+                <div class="step" id="step2" style="display: none;">
+                    <div class="step-title">
+                        <div class="step-number">2</div>
+                        <span><i class="fas fa-id-badge"></i> اختر التصنيف</span>
+                    </div>
+
+                    <p style="text-align: center; color: var(--gray-light); margin-bottom: 28px; font-size: 15px;">
+                        <i class="fas fa-info-circle"></i>
+                        اختر الوزارة التي تعمل بها، أو اختر "مواطن" إذا لم تكن موظفاً حكومياً
+                    </p>
+
+                    <div class="departments-grid">
+                        <div class="department-card health" onclick="selectDepartment(this, 'health')">
+                            <div class="department-icon">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <h4>وزارة الصحة</h4>
+                            <small>القطاع الطبي والإسعافي</small>
+                        </div>
+
+                        <div class="department-card interior" onclick="selectDepartment(this, 'interior')">
+                            <div class="department-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4>وزارة الداخلية</h4>
+                            <small>القطاع الأمني والحماية</small>
+                        </div>
+
+                        <div class="department-card justice" onclick="selectDepartment(this, 'justice')">
+                            <div class="department-icon">
+                                <i class="fas fa-gavel"></i>
+                            </div>
+                            <h4>وزارة العدل</h4>
+                            <small>القطاع القضائي والقانوني</small>
+                        </div>
+
+                        <div class="department-card citizen" onclick="selectDepartment(this, 'citizen')">
+                            <div class="department-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h4>مواطن</h4>
+                            <small>للمواطنين غير الموظفين</small>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="goBackToStep1()">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>السابق</span>
+                        </button>
+                        <button class="btn" onclick="showStep3()">
+                            <span>التالي</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="step" id="step3" style="display: none;">
+                    <div class="step-title">
+                        <div class="step-number">3</div>
+                        <span><i class="fas fa-medal"></i> اختيار الرتبة</span>
+                    </div>
+
+                    <div id="ranksContainer"></div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="goBackToStep2()">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>السابق</span>
+                        </button>
+                        <button class="btn" onclick="showStep4()">
+                            <span>التالي</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="step" id="step4" style="display: none;">
+                    <div class="step-title">
+                        <div class="step-number">4</div>
+                        <span><i class="fas fa-briefcase"></i> المناصب الإدارية</span>
+                    </div>
+
+                    <div id="additionalContainer"></div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="goBackToStep3()">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>السابق</span>
+                        </button>
+                        <button class="btn" onclick="showStep5()">
+                            <span>التالي</span>
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="step" id="step5" style="display: none;">
+                    <div class="step-title">
+                        <div class="step-number">5</div>
+                        <span><i class="fas fa-check-double"></i> تأكيد وإرسال الطلب</span>
+                    </div>
+
+                    <div class="summary-grid" id="requestSummary"></div>
+
+                    <div class="terms-container">
+                        <div class="terms-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h4>شروط الموافقة والالتزام</h4>
+                        </div>
+
+                        <div class="term-item">
+                            <input type="checkbox" id="agreeTerms1">
+                            <label for="agreeTerms1">
+                                <i class="fas fa-check-circle"></i>
+                                أوافق على صحة المعلومات المدخلة وأتحمل المسؤولية الكاملة عن صحتها
+                            </label>
+                        </div>
+
+                        <div class="term-item">
+                            <input type="checkbox" id="agreeTerms2">
+                            <label for="agreeTerms2">
+                                <i class="fas fa-file-contract"></i>
+                                أوافق على الالتزام بأنظمة وقوانين الجهة الرقمية KR بشكل كامل
+                            </label>
+                        </div>
+
+                        <div class="term-item">
+                            <input type="checkbox" id="agreeTerms3">
+                            <label for="agreeTerms3">
+                                <i class="fas fa-balance-scale"></i>
+                                أقر بأن أي مخالفة أو معلومات خاطئة ستؤدي إلى رفض الطلب أو إلغاء التفعيل
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="goBackToStep4()">
+                            <i class="fas fa-arrow-right"></i>
+                            <span>السابق</span>
+                        </button>
+                        <button class="btn" onclick="submitRequest()">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>إرسال الطلب</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-message" id="successMessage" style="display: none;">
+                <i class="fas fa-check-circle" style="font-size: 82px; margin-bottom: 28px;"></i>
+                <h3 style="font-size: 32px; margin-bottom: 16px; font-weight: 800;">تم إرسال طلبك بنجاح! ✨</h3>
+                <p style="font-size: 17px; margin-bottom: 30px; color: var(--gray-light);">
+                    <i class="fas fa-clock"></i>
+                    سيتم مراجعة طلبك خلال 24-48 ساعة عمل
+                </p>
+                <div id="successDetails"></div>
+                <div class="btn-group" style="max-width: 650px; margin: 40px auto 0;">
+                    <button class="btn" onclick="checkRequestStatus()">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>تحديث حالة الطلب</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="goToHomePage()">
+                        <i class="fas fa-home"></i>
+                        <span>العودة للرئيسية</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DEPARTMENTS = {
+            health: {
+                name: 'وزارة الصحة',
+                color: '#2196f3',
+                icon: 'fa-heartbeat',
+                ranks: [
+                    'مسعف', 'مسعف أول', 'ممرض', 'ممرض أول', 'فني صحي',
+                    'فني صحي أول', 'أخصائي', 'مساعد جراح', 'دكتور عام',
+                    'دكتور', 'استشاري', 'جراح', 'رئيس استشاري', 'مدير طبي',
+                    'مستشار وزير الصحة', 'نائب وزير الصحة', 'وزير الصحة'
+                ],
+                additionals: [
+                    'إدارة القبول والتسجيل',
+                    'إدارة الشؤون الصحية',
+                    'مسؤول الشؤون الصحية',
+                    'إدارة متطوعين الهلال الأحمر',
+                    'إدارة الشكاوي بوزارة الصحة',
+                    'إدارة الكلية الصحية'
+                ]
+            },
+            interior: {
+                name: 'وزارة الداخلية',
+                color: '#f44336',
+                icon: 'fa-shield-alt',
+                ranks: [
+                    'جندي', 'جندي أول', 'عريف', 'وكيل رقيب', 'رقيب',
+                    'رقيب أول', 'رئيس رقباء', 'ملازم', 'ملازم أول',
+                    'نقيب', 'رائد', 'مقدم', 'عقيد', 'عميد', 'لواء',
+                    'فريق', 'فريق أول', 'نائب مدير الأمن العام',
+                    'مدير الأمن العام', 'نائب وزير الداخلية', 'وزير الداخلية'
+                ],
+                additionals: [
+                    'إدارة القبول والتجنيد',
+                    'إدارة شؤون الداخلية',
+                    'إدارة شؤون الأفراد سلك الضباط',
+                    'الادارة العامة لوزارة الداخلية',
+                    'ادارة الشكاوي بوزارة الداخلية'
+                ]
+            },
+            justice: {
+                name: 'وزارة العدل',
+                color: '#4caf50',
+                icon: 'fa-gavel',
+                ranks: [
+                    'محامي', 'محامي خبير', 'محامي متمرس', 'قاضي',
+                    'قاضي متمرس', 'قاضي خبير', 'قاضي محكمة عليا',
+                    'مستشار القضايا', 'مستشار وزير العدل',
+                    'نائب وزير العدل', 'وزير العدل'
+                ],
+                additionals: [
+                    'الاداره العامه للشؤون العدلية',
+                    'ادارة القبول والتسجيل',
+                    'ادارة الشكاوي بوزارة العدل'
+                ]
+            },
+            citizen: {
+                name: 'مواطن',
+                color: '#9c27b0',
+                icon: 'fa-user',
+                ranks: ['مواطن'],
+                additionals: []
+            }
+        };
+
+        let selectedDepartment = null;
+        let selectedRank = null;
+        let selectedAdditionals = [];
+        let hasExistingRequest = false;
+        let existingRequestData = null;
+        let uploadedNationalId = null;
+        let uploadedCharacterImage = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            checkExistingRequest();
+            setupGameIdField();
+        });
+
+        function checkExistingRequest() {
+            const requests = JSON.parse(localStorage.getItem('user_requests') || '[]');
+            const deviceId = getDeviceId();
+            const userRequests = requests.filter(req => req.deviceId === deviceId);
+
+            if (userRequests.length > 0) {
+                const latestRequest = userRequests.sort((a, b) =>
+                    new Date(b.submissionDate) - new Date(a.submissionDate)
+                )[0];
+
+                existingRequestData = latestRequest;
+                hasExistingRequest = true;
+
+                if (latestRequest.status === 'pending' || latestRequest.status === 'accepted') {
+                    showExistingRequest(latestRequest);
+                    return;
+                }
+            }
+
+            document.getElementById('applicationForm').style.display = 'block';
+        }
+
+        function showExistingRequest(request) {
+            const messageDiv = document.getElementById('previousRequestMessage');
+            const formDiv = document.getElementById('applicationForm');
+
+            let statusText, statusClass, statusIcon, statusColor;
+
+            if (request.status === 'pending') {
+                statusText = 'طلبك قيد المراجعة';
+                statusClass = 'warning';
+                statusIcon = 'clock';
+                statusColor = 'var(--warning)';
+            } else if (request.status === 'accepted') {
+                statusText = 'تم تفعيل هويتك بنجاح';
+                statusClass = 'success';
+                statusIcon = 'check-circle';
+                statusColor = 'var(--success)';
+            } else {
+                statusText = 'تم رفض طلبك';
+                statusClass = 'danger';
+                statusIcon = 'times-circle';
+                statusColor = 'var(--danger)';
+            }
+
+            messageDiv.innerHTML = `
+                <i class="fas fa-${statusIcon}" style="font-size: 74px; margin-bottom: 24px; color: ${statusColor};"></i>
+                <h2 style="font-size: 30px; margin-bottom: 20px;">${statusText}</h2>
+                <div style="background: rgba(0,0,0,0.22); border-radius: 16px; padding: 24px; margin: 28px 0;">
+                    <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 12px;">
+                        <span><i class="fas fa-hashtag"></i> رقم الطلب:</span>
+                        <strong>${request.id}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 12px;">
+                        <span><i class="fas fa-calendar"></i> التاريخ:</span>
+                        <span>${request.date}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px 0; gap: 12px;">
+                        <span><i class="fas fa-info-circle"></i> الحالة:</span>
+                        <span style="color: ${statusColor}; font-weight: 800;">
+                            ${request.status === 'accepted' ? 'مقبول ✓' :
+                              request.status === 'pending' ? 'قيد المراجعة ⏱' : 'مرفوض ✗'}
+                        </span>
+                    </div>
+                </div>
+                ${request.status === 'rejected' ? `
+                    <button class="btn" onclick="startNewRequest()">
+                        <i class="fas fa-redo"></i>
+                        <span>تقديم طلب جديد</span>
+                    </button>
+                ` : ''}
+            `;
+
+            messageDiv.className = `status-message show ${statusClass}`;
+            messageDiv.style.background = 'rgba(255,255,255,0.04)';
+            messageDiv.style.backdropFilter = 'blur(18px)';
+            messageDiv.style.border = `1px solid ${statusColor}`;
+            formDiv.style.display = 'none';
+        }
+
+        function startNewRequest() {
+            document.getElementById('previousRequestMessage').style.display = 'none';
+            document.getElementById('applicationForm').style.display = 'block';
+            hasExistingRequest = false;
+            existingRequestData = null;
+
+            document.getElementById('fullName').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('gameUsername').value = '';
+            document.getElementById('discordUsername').value = '';
+            document.getElementById('gameId').value = '';
+
+            selectedDepartment = null;
+            selectedRank = null;
+            selectedAdditionals = [];
+            uploadedNationalId = null;
+            uploadedCharacterImage = null;
+
+            document.getElementById('nationalIdPreview').innerHTML = '';
+            document.getElementById('nationalIdPreview').classList.remove('show');
+            document.getElementById('characterPreview').innerHTML = '';
+            document.getElementById('characterPreview').classList.remove('show');
+
+            document.getElementById('step1').style.display = 'block';
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step4').style.display = 'none';
+            document.getElementById('step5').style.display = 'none';
+
+            resetDepartmentSelection();
+        }
+
+        function setupGameIdField() {
+            const gameIdInput = document.getElementById('gameId');
+            const counter = document.getElementById('gameIdCounter');
+
+            gameIdInput.addEventListener('input', function() {
+                let value = this.value.replace(/\D/g, '');
+                value = value.slice(0, 10);
+                this.value = value;
+                counter.textContent = `${value.length}/10`;
+
+                if (value.length === 10) {
+                    counter.style.color = '#7df0a7';
+                    counter.style.background = 'rgba(0, 200, 83, 0.18)';
+                } else {
+                    counter.style.color = 'rgba(255, 255, 255, 0.6)';
+                    counter.style.background = 'rgba(0, 0, 0, 0.35)';
+                }
+            });
+        }
+
+        function getDeviceId() {
+            let deviceId = localStorage.getItem('device_id');
+            if (!deviceId) {
+                deviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('device_id', deviceId);
+            }
+            return deviceId;
+        }
+
+        function validateStep1() {
+            const name = document.getElementById('fullName').value.trim();
+            const age = document.getElementById('age').value;
+            const gameUsername = document.getElementById('gameUsername').value.trim();
+            const discordUsername = document.getElementById('discordUsername').value.trim();
+            const gameId = document.getElementById('gameId').value.trim();
+
+            const arabicRegex = /^[\u0600-\u06FF\s]+$/;
+            const words = name.split(/\s+/);
+
+            if (!name || words.length < 3) {
+                showAlert('يجب أن يكون الاسم ثلاثي بالكامل (الاسم الأول + اسم الأب + اسم العائلة)', false);
+                return;
+            }
+
+            if (!arabicRegex.test(name)) {
+                showAlert('يجب أن يكون الاسم باللغة العربية فقط', false);
+                return;
+            }
+
+            if (!age || age < 18) {
+                showAlert('العمر يجب أن يكون 18 سنة أو أكثر', false);
+                return;
+            }
+
+            if (!gameUsername) {
+                showAlert('يرجى إدخال اسم المستخدم في اللعبة', false);
+                return;
+            }
+
+            if (!discordUsername) {
+                showAlert('يرجى إدخال اسم المستخدم في الديسكورد', false);
+                return;
+            }
+
+            if (!gameId || gameId.length !== 10 || !/^\d+$/.test(gameId)) {
+                showAlert('رقم الهوية يجب أن يكون 10 أرقام بالضبط', false);
+                return;
+            }
+
+            if (!uploadedNationalId) {
+                showAlert('يرجى إرفاق صورة الهوية الوطنية داخل اللعبة', false);
+                return;
+            }
+
+            if (!uploadedCharacterImage) {
+                showAlert('يرجى إرفاق صورة شخصيتك داخل اللعبة', false);
+                return;
+            }
+
+            showStep2();
+        }
+
+        function showStep2() {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goBackToStep1() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectDepartment(element, departmentId) {
+            document.querySelectorAll('.department-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedDepartment = departmentId;
+        }
+
+        function resetDepartmentSelection() {
+            document.querySelectorAll('.department-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            selectedDepartment = null;
+        }
+
+        function showStep3() {
+            if (!selectedDepartment) {
+                showAlert('يرجى اختيار التصنيف أولاً', false);
+                return;
+            }
+
+            const container = document.getElementById('ranksContainer');
+            const department = DEPARTMENTS[selectedDepartment];
+
+            if (selectedDepartment === 'citizen') {
+                selectedRank = 'مواطن';
+                showStep4();
+                return;
+            }
+
+            container.innerHTML = `
+                <h4 style="color: ${department.color}; margin-bottom: 26px; text-align: center; font-size: 21px; font-weight: 800;">
+                    <i class="fas fa-arrow-up" style="margin-left: 10px;"></i>
+                    اختر رتبتك في ${department.name}
+                </h4>
+                <div class="ranks-grid">
+                    ${department.ranks.map(rank => `
+                        <div class="rank-item" onclick="selectRank(this, '${rank}')">
+                            ${rank}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectRank(element, rank) {
+            document.querySelectorAll('.rank-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedRank = rank;
+        }
+
+        function goBackToStep2() {
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showStep4() {
+            if (!selectedRank) {
+                showAlert('يرجى اختيار الرتبة أولاً', false);
+                return;
+            }
+
+            const container = document.getElementById('additionalContainer');
+            const department = DEPARTMENTS[selectedDepartment];
+
+            if (selectedDepartment === 'citizen') {
+                selectedAdditionals = [];
+                showStep5();
+                return;
+            }
+
+            container.innerHTML = `
+                <h4 style="color: ${department.color}; margin-bottom: 24px; text-align: center; font-size: 21px; font-weight: 800;">
+                    <i class="fas fa-layer-group" style="margin-left: 10px;"></i>
+                    اختر المناصب الإدارية (اختياري)
+                </h4>
+                <p style="text-align: center; color: var(--gray-light); margin-bottom: 26px;">
+                    <i class="fas fa-info-circle"></i>
+                    يمكنك اختيار أكثر من منصب إداري أو تخطي هذه الخطوة
+                </p>
+                <div class="additionals-grid">
+                    ${department.additionals.map((additional, index) => `
+                        <div class="additional-item" onclick="toggleAdditionalPost(this, '${additional.replace(/'/g, "\\'")}')">
+                            <input type="checkbox" id="add_${index}">
+                            <label for="add_${index}">
+                                <i class="fas fa-briefcase"></i>
+                                <span>${additional}</span>
+                            </label>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            document.getElementById('step3').style.display = 'none';
+            document.getElementById('step4').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleAdditionalPost(element, post) {
+            element.classList.toggle('selected');
+            const index = selectedAdditionals.indexOf(post);
+            if (index === -1) {
+                selectedAdditionals.push(post);
+            } else {
+                selectedAdditionals.splice(index, 1);
+            }
+        }
+
+        function goBackToStep3() {
+            document.getElementById('step4').style.display = 'none';
+            document.getElementById('step3').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showStep5() {
+            const summaryContainer = document.getElementById('requestSummary');
+            const department = DEPARTMENTS[selectedDepartment];
+
+            let summaryHTML = `
+                <div class="summary-item">
+                    <div class="label"><i class="fas fa-user"></i> الاسم الكامل</div>
+                    <div class="value">${document.getElementById('fullName').value}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="label"><i class="fas fa-calendar-alt"></i> العمر</div>
+                    <div class="value">${document.getElementById('age').value} سنة</div>
+                </div>
+                <div class="summary-item">
+                    <div class="label"><i class="fas fa-gamepad"></i> اسم المستخدم (اللعبة)</div>
+                    <div class="value">${document.getElementById('gameUsername').value}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="label"><i class="fab fa-discord"></i> اسم المستخدم (ديسكورد)</div>
+                    <div class="value">${document.getElementById('discordUsername').value}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="label"><i class="fas fa-fingerprint"></i> رقم الهوية</div>
+                    <div class="value">${document.getElementById('gameId').value}</div>
+                </div>
+                <div class="summary-item">
+                    <div class="label"><i class="fas fa-id-badge"></i> التصنيف</div>
+                    <div class="value">${department.name}</div>
+                </div>
+            `;
+
+            if (selectedDepartment !== 'citizen') {
+                summaryHTML += `
+                    <div class="summary-item">
+                        <div class="label"><i class="fas fa-medal"></i> الرتبة</div>
+                        <div class="value">${selectedRank}</div>
+                    </div>
+                `;
+            }
+
+            if (selectedAdditionals.length > 0) {
+                summaryHTML += `
+                    <div class="summary-item" style="grid-column: 1 / -1;">
+                        <div class="label"><i class="fas fa-briefcase"></i> المناصب الإدارية</div>
+                        <div class="value">${selectedAdditionals.join(' • ')}</div>
+                    </div>
+                `;
+            }
+
+            summaryContainer.innerHTML = summaryHTML;
+
+            document.getElementById('step4').style.display = 'none';
+            document.getElementById('step5').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goBackToStep4() {
+            document.getElementById('step5').style.display = 'none';
+            document.getElementById('step4').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function submitRequest() {
+            const terms1 = document.getElementById('agreeTerms1');
+            const terms2 = document.getElementById('agreeTerms2');
+            const terms3 = document.getElementById('agreeTerms3');
+
+            if (!terms1.checked || !terms2.checked || !terms3.checked) {
+                showAlert('يجب الموافقة على جميع الشروط قبل إرسال الطلب', false);
+                return;
+            }
+
+            const requestData = {
+                id: 'KR-' + Date.now().toString().slice(-8) + Math.random().toString(36).substr(2, 4).toUpperCase(),
+                fullName: document.getElementById('fullName').value.trim(),
+                age: parseInt(document.getElementById('age').value),
+                gameUsername: document.getElementById('gameUsername').value.trim(),
+                discordUsername: document.getElementById('discordUsername').value.trim(),
+                gameId: document.getElementById('gameId').value.trim(),
+                department: selectedDepartment,
+                departmentName: DEPARTMENTS[selectedDepartment].name,
+                rank: selectedRank,
+                additionals: selectedAdditionals,
+                nationalIdImage: uploadedNationalId,
+                characterImage: uploadedCharacterImage,
+                date: new Date().toLocaleString('ar-SA', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }),
+                submissionDate: new Date().toISOString(),
+                status: 'pending',
+                deviceId: getDeviceId()
+            };
+
+            saveUserRequest(requestData);
+            sendToAdminSystem(requestData);
+            hasExistingRequest = true;
+            existingRequestData = requestData;
+
+            showSuccessMessage(requestData);
+        }
+
+        function saveUserRequest(requestData) {
+            let userRequests = JSON.parse(localStorage.getItem('user_requests') || '[]');
+            userRequests.push(requestData);
+            localStorage.setItem('user_requests', JSON.stringify(userRequests));
+        }
+
+        function sendToAdminSystem(requestData) {
+            try {
+                let adminRequests = JSON.parse(localStorage.getItem('admin_pending_requests') || '[]');
+
+                const adminRequest = {
+                    ...requestData,
+                    reviewed: false,
+                    reviewNotes: '',
+                    reviewer: '',
+                    priority: 'normal'
+                };
+
+                adminRequests.unshift(adminRequest);
+                localStorage.setItem('admin_pending_requests', JSON.stringify(adminRequests));
+
+                updateAdminStatistics(adminRequests);
+                createAdminNotification(adminRequest);
+            } catch (error) {
+                showAlert('حدث خطأ في إرسال الطلب، يرجى المحاولة مرة أخرى', false);
+            }
+        }
+
+        function updateAdminStatistics(requests) {
+            const stats = {
+                total: requests.length,
+                pending: requests.filter(r => r.status === 'pending').length,
+                accepted: requests.filter(r => r.status === 'accepted').length,
+                rejected: requests.filter(r => r.status === 'rejected').length,
+                lastUpdate: new Date().toISOString()
+            };
+            localStorage.setItem('admin_stats', JSON.stringify(stats));
+        }
+
+        function createAdminNotification(request) {
+            let notifications = JSON.parse(localStorage.getItem('admin_notifications') || '[]');
+
+            const notification = {
+                id: 'notif_' + Date.now(),
+                type: 'new_request',
+                title: '📥 طلب تفعيل جديد',
+                message: `طلب جديد من ${request.fullName} - ${request.departmentName}`,
+                requestId: request.id,
+                timestamp: new Date().toISOString(),
+                read: false
+            };
+
+            notifications.unshift(notification);
+            localStorage.setItem('admin_notifications', JSON.stringify(notifications));
+        }
+
+        function showSuccessMessage(requestData) {
+            const form = document.getElementById('applicationForm');
+            const successMessage = document.getElementById('successMessage');
+            const successDetails = document.getElementById('successDetails');
+
+            successDetails.innerHTML = `
+                <div style="background: rgba(0,0,0,0.20); border-radius: 18px; padding: 28px; margin: 30px 0; border: 1px solid rgba(255,255,255,0.08);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 12px;">
+                        <span style="color: var(--gray-light);"><i class="fas fa-hashtag"></i> رقم الطلب:</span>
+                        <span style="font-weight: 800; font-size: 18px; color: var(--accent-light);">${requestData.id}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 12px;">
+                        <span style="color: var(--gray-light);"><i class="fas fa-calendar"></i> تاريخ التقديم:</span>
+                        <span style="font-weight: 700;">${requestData.date}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); gap: 12px;">
+                        <span style="color: var(--gray-light);"><i class="fas fa-building"></i> الوزارة:</span>
+                        <span style="font-weight: 700;">${requestData.departmentName}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px 0; gap: 12px;">
+                        <span style="color: var(--gray-light);"><i class="fas fa-info-circle"></i> الحالة:</span>
+                        <span style="color: var(--warning); font-weight: 800; font-size: 17px;">
+                            <i class="fas fa-clock"></i> قيد المراجعة
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+            successMessage.classList.add('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkRequestStatus() {
+            if (!existingRequestData) {
+                showAlert('لا يوجد طلب للتحقق منه', false);
+                return;
+            }
+
+            showAlert('جاري التحقق من حالة الطلب...', true);
+
+            setTimeout(() => {
+                const adminRequests = JSON.parse(localStorage.getItem('admin_pending_requests') || '[]');
+                const request = adminRequests.find(r => r.id === existingRequestData.id);
+
+                if (request && request.status !== existingRequestData.status) {
+                    existingRequestData.status = request.status;
+
+                    let userRequests = JSON.parse(localStorage.getItem('user_requests') || '[]');
+                    userRequests = userRequests.map(req => {
+                        if (req.id === existingRequestData.id) {
+                            req.status = request.status;
+                        }
+                        return req;
+                    });
+                    localStorage.setItem('user_requests', JSON.stringify(userRequests));
+
+                    if (request.status === 'accepted') {
+                        activateUser(request);
+                        showAlert('🎉 تم قبول طلبك! سيتم تحديث الصفحة...', true);
+                        setTimeout(() => location.reload(), 1800);
+                    } else if (request.status === 'rejected') {
+                        showAlert('❌ نعتذر، تم رفض طلبك. سيتم تحديث الصفحة...', false);
+                        setTimeout(() => location.reload(), 1800);
+                    }
+                } else {
+                    showAlert('لا توجد تحديثات جديدة على طلبك', false);
+                }
+            }, 1300);
+        }
+
+        function activateUser(requestData) {
+            try {
+                const userData = {
+                    id: requestData.gameId,
+                    fullName: requestData.fullName,
+                    age: requestData.age,
+                    gameUsername: requestData.gameUsername,
+                    discordUsername: requestData.discordUsername,
+                    department: requestData.department,
+                    departmentName: requestData.departmentName,
+                    rank: requestData.rank,
+                    additionals: requestData.additionals,
+                    activationDate: new Date().toISOString(),
+                    status: 'active',
+                    deviceId: requestData.deviceId,
+                    requestId: requestData.id
+                };
+
+                localStorage.setItem('active_user', JSON.stringify(userData));
+            } catch (error) {}
+        }
+
+        function showAlert(message, isSuccess) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.innerHTML = `
+                <i class="fas fa-${isSuccess ? 'check-circle' : 'exclamation-triangle'}"
+                   style="font-size: 22px; margin-bottom: 8px;"></i>
+                <div>${message}</div>
+            `;
+            alertBox.className = 'alert';
+
+            if (isSuccess) {
+                alertBox.classList.add('success');
+            } else {
+                alertBox.classList.add('warning');
+            }
+
+            alertBox.classList.add('show');
+
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 3800);
+        }
+
+        function goToHomePage() {
+            window.location.href = 'index.html';
+        }
+
+        function validateGameId(input) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+            let value = input.value;
+
+            arabicNumbers.forEach((arabicNum, index) => {
+                value = value.split(arabicNum).join(englishNumbers[index]);
+            });
+
+            value = value.replace(/[^0-9]/g, '');
+            input.value = value;
+        }
+
+        function handleImageUpload(input, previewId) {
+            const file = input.files[0];
+            const previewContainer = document.getElementById(previewId);
+
+            if (!file) return;
+
+            const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+            if (!allowedTypes.includes(file.type)) {
+                showAlert('يرجى اختيار صورة بصيغة PNG أو JPG فقط', false);
+                input.value = '';
+                return;
+            }
+
+            const maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                showAlert('حجم الصورة يجب أن يكون أقل من 5 ميجابايت', false);
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageData = e.target.result;
+
+                if (previewId === 'nationalIdPreview') {
+                    uploadedNationalId = {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        data: imageData
+                    };
+                } else if (previewId === 'characterPreview') {
+                    uploadedCharacterImage = {
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        data: imageData
+                    };
+                }
+
+                previewContainer.innerHTML = `
+                    <img src="${imageData}" alt="معاينة الصورة">
+                    <div class="remove-image" onclick="removeImage('${previewId}', '${input.id}')">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="image-info">
+                        <i class="fas fa-check-circle"></i>
+                        <span>تم رفع الصورة بنجاح (${formatFileSize(file.size)})</span>
+                    </div>
+                `;
+                previewContainer.classList.add('show');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeImage(previewId, inputId) {
+            const previewContainer = document.getElementById(previewId);
+            const inputElement = document.getElementById(inputId);
+
+            previewContainer.innerHTML = '';
+            previewContainer.classList.remove('show');
+            inputElement.value = '';
+
+            if (previewId === 'nationalIdPreview') {
+                uploadedNationalId = null;
+            } else if (previewId === 'characterPreview') {
+                uploadedCharacterImage = null;
+            }
+
+            showAlert('تم حذف الصورة', true);
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+    </script>
+</body>
+</html>
