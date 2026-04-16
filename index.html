@@ -3,22 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>منصة سمو | وزارة الصحة</title>
+  <title>منصة سمو</title>
+  <meta name="theme-color" content="#07090f" />
   <style>
     :root{
-      --bg:#f5f8fc;
-      --surface:#ffffff;
-      --surface-2:#f0f4fa;
-      --text:#0f172a;
-      --muted:#64748b;
-      --primary:#0f766e;
-      --primary-dark:#0b5d57;
-      --accent:#14b8a6;
-      --border:#dbe4f0;
-      --danger:#dc2626;
-      --warning:#d97706;
-      --shadow:0 10px 30px rgba(15, 23, 42, 0.08);
-      --radius:18px;
+      --bg:#06080d;
+      --bg2:#0b1020;
+      --card:#12141c;
+      --card2:#171a25;
+      --text:#f5f7fb;
+      --muted:#97a0b8;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 12px 40px rgba(0,0,0,.35);
+      --radius:28px;
+
+      --gold:#f4c84d;
+      --gold-bg:rgba(244,200,77,.10);
+
+      --red:#ff4d4d;
+      --red-bg:rgba(255,77,77,.10);
+
+      --pink:#db67ff;
+      --pink-bg:rgba(219,103,255,.10);
+
+      --green:#3ee06c;
+      --green-bg:rgba(62,224,108,.10);
+
+      --olive:#75a56d;
+      --olive-bg:rgba(117,165,109,.10);
+
+      --blue:#5a7dff;
+      --blue-bg:rgba(90,125,255,.10);
+
+      --violet:#8d6cff;
+      --violet-bg:rgba(141,108,255,.10);
+
+      --purple:#c04cff;
+      --purple-bg:rgba(192,76,255,.10);
+
+      --cyan:#59dfff;
+      --cyan-bg:rgba(89,223,255,.10);
+
+      --accent:#7c5cff;
+      --accent2:#9f7bff;
     }
 
     *{box-sizing:border-box}
@@ -26,41 +53,91 @@
     body{
       margin:0;
       font-family: Tahoma, Arial, sans-serif;
-      background:linear-gradient(180deg,#eef4fb 0%, #f8fbff 100%);
       color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(124,92,255,.14), transparent 20%),
+        radial-gradient(circle at top left, rgba(89,223,255,.08), transparent 18%),
+        linear-gradient(180deg, #05070c 0%, #080b13 35%, #090d17 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font-family:inherit}
+
+    .bg-blur{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .orb{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(60px);
+      opacity:.18;
+    }
+    .orb.one{width:260px;height:260px;background:#7c5cff;top:80px;right:40px}
+    .orb.two{width:220px;height:220px;background:#59dfff;bottom:100px;left:40px}
+    .orb.three{width:190px;height:190px;background:#ff4d88;top:50%;right:45%}
+
+    .app{
+      position:relative;
+      z-index:1;
+      max-width:1450px;
+      margin:0 auto;
+      padding:18px;
     }
 
     .topbar{
-      background:linear-gradient(90deg, #0f766e 0%, #0b5d57 100%);
-      color:#fff;
-      padding:14px 22px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
+      padding:14px 18px;
+      background:rgba(15,17,24,.72);
+      border:1px solid var(--border);
+      border-radius:24px;
+      backdrop-filter: blur(18px);
+      box-shadow:var(--shadow);
       position:sticky;
-      top:0;
-      z-index:50;
-      box-shadow:0 8px 24px rgba(0,0,0,.12);
+      top:12px;
+      z-index:20;
     }
 
     .brand{
       display:flex;
       align-items:center;
       gap:14px;
-      font-weight:700;
-      font-size:22px;
+      min-width:0;
     }
 
-    .brand-badge{
-      width:44px;
-      height:44px;
-      border-radius:14px;
-      background:rgba(255,255,255,.16);
+    .brand-logo{
+      width:58px;
+      height:58px;
+      border-radius:20px;
       display:grid;
       place-items:center;
-      font-size:22px;
-      border:1px solid rgba(255,255,255,.2);
+      font-size:26px;
+      font-weight:700;
+      color:#fff;
+      background:
+        linear-gradient(135deg, rgba(124,92,255,.95), rgba(89,223,255,.85));
+      box-shadow:0 12px 30px rgba(124,92,255,.35);
+      flex-shrink:0;
+    }
+
+    .brand-text h1{
+      margin:0;
+      font-size:24px;
+      line-height:1.2;
+    }
+
+    .brand-text p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:13px;
     }
 
     .top-actions{
@@ -68,1236 +145,1388 @@
       align-items:center;
       gap:10px;
       flex-wrap:wrap;
+      justify-content:flex-end;
     }
 
-    .ghost-note{
-      font-size:13px;
-      opacity:.95;
-      background:rgba(255,255,255,.12);
-      padding:8px 12px;
+    .pill{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      color:#d9def0;
+      padding:10px 14px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-    }
-
-    .layout{
-      display:grid;
-      grid-template-columns:280px 1fr;
-      min-height:calc(100vh - 72px);
-    }
-
-    .sidebar{
-      background:#0f172a;
-      color:#fff;
-      padding:22px 16px;
-      position:sticky;
-      top:72px;
-      height:calc(100vh - 72px);
-      overflow:auto;
-    }
-
-    .sidebar h3{
-      margin:6px 10px 14px;
-      font-size:14px;
-      color:#cbd5e1;
-      font-weight:600;
-    }
-
-    .nav-btn{
-      width:100%;
-      border:none;
-      text-align:right;
-      padding:14px 16px;
-      border-radius:14px;
-      margin-bottom:8px;
-      background:transparent;
-      color:#e2e8f0;
-      cursor:pointer;
-      font-size:15px;
-      transition:.2s ease;
-    }
-
-    .nav-btn:hover,
-    .nav-btn.active{
-      background:rgba(20,184,166,.16);
-      color:#fff;
-    }
-
-    .content{
-      padding:28px;
-    }
-
-    .hero{
-      background:linear-gradient(135deg, #0f766e 0%, #0ea5a0 100%);
-      color:#fff;
-      border-radius:28px;
-      padding:32px;
-      box-shadow:var(--shadow);
-      display:grid;
-      grid-template-columns:1.5fr 1fr;
-      gap:24px;
-      align-items:center;
-      margin-bottom:22px;
-    }
-
-    .hero h1{
-      margin:0 0 12px;
-      font-size:34px;
-      line-height:1.4;
-    }
-
-    .hero p{
-      margin:0 0 16px;
-      color:rgba(255,255,255,.92);
-      line-height:1.9;
-      font-size:15px;
-    }
-
-    .hero-card{
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.16);
-      border-radius:22px;
-      padding:18px;
-      backdrop-filter: blur(6px);
-    }
-
-    .hero-card div{
-      margin-bottom:10px;
-      font-size:14px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:18px;
-    }
-
-    .card{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:20px;
-    }
-
-    .span-12{grid-column:span 12}
-    .span-8{grid-column:span 8}
-    .span-6{grid-column:span 6}
-    .span-4{grid-column:span 4}
-    .span-3{grid-column:span 3}
-
-    .section{
-      display:none;
-      animation:fade .25s ease;
-    }
-
-    .section.active{display:block}
-
-    @keyframes fade{
-      from{opacity:0;transform:translateY(8px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-
-    .title-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:14px;
-      flex-wrap:wrap;
-    }
-
-    .title-row h2{
-      margin:0;
-      font-size:24px;
-    }
-
-    .muted{color:var(--muted); font-size:14px}
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-      margin-bottom:22px;
-    }
-
-    .stat{
-      background:var(--surface);
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:18px;
-      box-shadow:var(--shadow);
-    }
-
-    .stat h4{
-      margin:0 0 8px;
-      color:var(--muted);
       font-size:13px;
-      font-weight:600;
-    }
-
-    .stat .num{
-      font-size:30px;
-      font-weight:700;
-      color:#0f172a;
-    }
-
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:14px;
-    }
-
-    .item{
-      background:var(--surface-2);
-      border:1px solid var(--border);
-      border-radius:14px;
-      padding:14px;
-    }
-
-    .item strong{display:block;margin-bottom:6px}
-
-    .badge{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:700;
-      margin-left:6px;
-    }
-
-    .badge.success{background:#dcfce7;color:#166534}
-    .badge.pending{background:#fef3c7;color:#92400e}
-    .badge.info{background:#dbeafe;color:#1d4ed8}
-    .badge.danger{background:#fee2e2;color:#991b1b}
-
-    form{
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:14px;
-      margin-top:12px;
-    }
-
-    .field{
-      grid-column:span 6;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .field.full{grid-column:span 12}
-    .field.third{grid-column:span 4}
-
-    label{
-      font-size:14px;
-      font-weight:700;
-      color:#1e293b;
-    }
-
-    input, select, textarea{
-      width:100%;
-      padding:13px 14px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:#fff;
-      outline:none;
-      font-family:inherit;
-      font-size:14px;
-      transition:.15s ease;
-    }
-
-    textarea{min-height:110px; resize:vertical}
-
-    input:focus, select:focus, textarea:focus{
-      border-color:#5eead4;
-      box-shadow:0 0 0 4px rgba(20,184,166,.12);
     }
 
     .btn{
       border:none;
-      border-radius:14px;
-      padding:13px 18px;
       cursor:pointer;
+      border-radius:16px;
+      padding:12px 18px;
+      color:#fff;
       font-weight:700;
-      font-family:inherit;
+      transition:.2s ease;
       font-size:14px;
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow:0 10px 26px rgba(124,92,255,.35);
+    }
+    .btn-soft{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--border);
+      color:#edf0ff;
+    }
+    .btn-danger{
+      background:linear-gradient(135deg, #c43e5f, #8a2147);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .hero-main, .hero-side{
+      background:linear-gradient(180deg, rgba(19,22,32,.92), rgba(14,16,24,.88));
+      border:1px solid var(--border);
+      border-radius:34px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-main{
+      padding:30px;
+      position:relative;
+      overflow:hidden;
+      min-height:320px;
+    }
+
+    .hero-main::before{
+      content:"";
+      position:absolute;
+      inset:auto -70px -70px auto;
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(124,92,255,.30), transparent 65%);
+    }
+
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      border-radius:999px;
+      color:#dce3ff;
+      font-size:13px;
+    }
+
+    .hero-main h2{
+      font-size:46px;
+      margin:18px 0 14px;
+      line-height:1.25;
+    }
+
+    .hero-main p{
+      margin:0;
+      max-width:760px;
+      color:var(--muted);
+      font-size:16px;
+      line-height:2;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:24px;
+    }
+
+    .hero-side{
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:320px;
+    }
+
+    .hero-side h3{
+      margin:0 0 12px;
+      font-size:24px;
+    }
+
+    .hero-side p{
+      color:var(--muted);
+      line-height:1.9;
+      margin:0 0 14px;
+      font-size:14px;
+    }
+
+    .mini-stats{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .mini-stat{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .mini-stat .big{
+      display:block;
+      font-size:24px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .section{
+      margin-top:26px;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:16px;
+      margin-bottom:16px;
+      flex-wrap:wrap;
+    }
+
+    .section-head h3{
+      margin:0;
+      font-size:30px;
+    }
+
+    .section-head p{
+      margin:6px 0 0;
+      color:var(--muted);
+    }
+
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:22px;
+    }
+
+    .service-card{
+      position:relative;
+      min-height:360px;
+      background:linear-gradient(180deg, rgba(21,23,31,.96), rgba(17,19,28,.95));
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:32px;
+      padding:26px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transform-style:preserve-3d;
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      cursor:pointer;
+    }
+
+    .service-card:hover{
+      transform:translateY(-6px) rotateX(4deg) rotateY(-4deg);
+      box-shadow:0 24px 60px rgba(0,0,0,.38);
+      border-color:rgba(255,255,255,.12);
+    }
+
+    .service-card::after{
+      content:"";
+      position:absolute;
+      inset:auto -40px -40px auto;
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.05), transparent 65%);
+    }
+
+    .icon-wrap{
+      width:126px;
+      height:126px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      margin:8px auto 34px;
+      font-size:54px;
+      border:1px solid rgba(255,255,255,.04);
+      box-shadow: inset 0 0 35px rgba(255,255,255,.02);
+    }
+
+    .service-title{
+      text-align:center;
+      font-size:28px;
+      margin:0 0 12px;
+      font-weight:700;
+    }
+
+    .service-desc{
+      text-align:center;
+      color:var(--muted);
+      line-height:1.9;
+      font-size:14px;
+      max-width:90%;
+      margin:0 auto;
+    }
+
+    .service-footer{
+      position:absolute;
+      right:26px;
+      left:26px;
+      bottom:22px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .open-btn{
+      width:100%;
+      padding:14px 18px;
+      border:none;
+      border-radius:18px;
+      color:#fff;
+      font-weight:700;
+      font-size:15px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.06);
+      cursor:pointer;
       transition:.2s ease;
     }
 
-    .btn-primary{
-      background:var(--primary);
+    .open-btn:hover{
+      background:rgba(255,255,255,.10);
+    }
+
+    .gold .icon-wrap{background:var(--gold-bg); color:var(--gold)}
+    .red .icon-wrap{background:var(--red-bg); color:var(--red)}
+    .pink .icon-wrap{background:var(--pink-bg); color:var(--pink)}
+    .green .icon-wrap{background:var(--green-bg); color:var(--green)}
+    .olive .icon-wrap{background:var(--olive-bg); color:var(--olive)}
+    .blue .icon-wrap{background:var(--blue-bg); color:var(--blue)}
+    .violet .icon-wrap{background:rgba(141,108,255,.10); color:var(--violet)}
+    .purple .icon-wrap{background:var(--purple-bg); color:var(--purple)}
+    .cyan .icon-wrap{background:var(--cyan-bg); color:var(--cyan)}
+
+    .portal{
+      margin-top:26px;
+      display:none;
+    }
+
+    .portal.active{display:block}
+
+    .portal-grid{
+      display:grid;
+      grid-template-columns:300px 1fr;
+      gap:18px;
+    }
+
+    .portal-sidebar,
+    .panel{
+      background:linear-gradient(180deg, rgba(21,23,31,.96), rgba(17,19,28,.95));
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+    }
+
+    .portal-sidebar{
+      padding:18px;
+      height:fit-content;
+      position:sticky;
+      top:100px;
+    }
+
+    .portal-nav-btn{
+      width:100%;
+      text-align:right;
+      padding:14px 16px;
+      border:none;
+      background:transparent;
+      color:#e9ecf8;
+      border-radius:16px;
+      cursor:pointer;
+      margin-bottom:8px;
+      font-size:14px;
+      transition:.18s ease;
+    }
+
+    .portal-nav-btn:hover,
+    .portal-nav-btn.active{
+      background:rgba(124,92,255,.14);
+    }
+
+    .panel{
+      padding:22px;
+    }
+
+    .panel + .panel{margin-top:18px}
+
+    .panel h4{
+      margin:0 0 8px;
+      font-size:26px;
+    }
+
+    .panel p.lead{
+      color:var(--muted);
+      line-height:1.9;
+      margin:0 0 18px;
+      font-size:14px;
+    }
+
+    .cards-row{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .feature-box{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .feature-box strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:16px;
+    }
+
+    .feature-box span{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:13px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(12,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .field{grid-column:span 6}
+    .field.full{grid-column:span 12}
+    .field.third{grid-column:span 4}
+
+    .field label{
+      display:block;
+      margin-bottom:8px;
+      color:#eef1ff;
+      font-size:14px;
+      font-weight:700;
+    }
+
+    .input,
+    .select,
+    .textarea{
+      width:100%;
+      border:none;
+      outline:none;
       color:#fff;
-    }
-    .btn-primary:hover{background:var(--primary-dark)}
-
-    .btn-light{
-      background:#e2e8f0;
-      color:#0f172a;
-    }
-
-    .btn-danger{
-      background:var(--danger);
-      color:#fff;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:14px 16px;
+      font-size:14px;
+      transition:.18s ease;
     }
 
-    .btn-warning{
-      background:var(--warning);
-      color:#fff;
+    .input:focus,
+    .select:focus,
+    .textarea:focus{
+      border-color:rgba(124,92,255,.55);
+      box-shadow:0 0 0 4px rgba(124,92,255,.12);
     }
 
-    .toolbar{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
+    .textarea{min-height:120px;resize:vertical}
+
+    .table-wrap{
+      overflow:auto;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.08);
     }
 
     table{
       width:100%;
       border-collapse:collapse;
-      margin-top:10px;
-      overflow:hidden;
+      min-width:760px;
+      background:rgba(255,255,255,.02);
     }
 
     th, td{
-      padding:14px 12px;
-      border-bottom:1px solid var(--border);
       text-align:right;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,.06);
       font-size:14px;
       vertical-align:top;
     }
 
     th{
-      color:var(--muted);
-      font-weight:700;
-      background:#f8fafc;
+      background:rgba(255,255,255,.04);
+      color:#dbe0f6;
     }
 
-    .note-box{
-      background:#ecfeff;
-      border:1px solid #bae6fd;
-      border-radius:16px;
-      padding:16px;
-      color:#0f172a;
-      line-height:1.9;
-      font-size:14px;
+    td{
+      color:#edf1ff;
     }
 
-    .login-box{
-      max-width:520px;
-      margin:0 auto;
-    }
-
-    .login-header{
-      text-align:center;
-      margin-bottom:16px;
-    }
-
-    .login-header h2{
-      margin:0 0 8px;
-      font-size:28px;
-    }
-
-    .footer-note{
-      margin-top:18px;
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
       font-size:12px;
-      color:var(--muted);
-      text-align:center;
+      font-weight:700;
+    }
+    .tag.ok{background:rgba(62,224,108,.12); color:#72f095}
+    .tag.warn{background:rgba(244,200,77,.12); color:#ffd978}
+    .tag.info{background:rgba(89,223,255,.12); color:#89e9ff}
+
+    .hidden{
+      display:none !important;
     }
 
-    .quick-links{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-      margin-top:14px;
+    .employee-only{
+      display:none;
     }
 
-    .quick-link{
-      padding:18px;
-      background:var(--surface-2);
-      border:1px solid var(--border);
-      border-radius:18px;
-      cursor:pointer;
-      transition:.2s ease;
-      text-align:right;
+    .employee-only.show{
+      display:block;
     }
-    .quick-link:hover{transform:translateY(-2px)}
 
     .empty{
+      background:rgba(255,255,255,.03);
+      border:1px dashed rgba(255,255,255,.1);
+      border-radius:22px;
+      padding:28px;
       text-align:center;
       color:var(--muted);
-      padding:18px;
-      background:#f8fafc;
-      border:1px dashed var(--border);
-      border-radius:14px;
-      margin-top:12px;
     }
 
-    .split{
+    .notice{
+      background:linear-gradient(180deg, rgba(124,92,255,.10), rgba(89,223,255,.06));
+      border:1px solid rgba(124,92,255,.18);
+      border-radius:24px;
+      padding:18px;
+      color:#e8ecff;
+      line-height:1.9;
+      margin-bottom:18px;
+    }
+
+    .auth-modal{
+      position:fixed;
+      inset:0;
+      background:rgba(4,6,10,.7);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:60;
+      backdrop-filter: blur(10px);
+    }
+
+    .auth-modal.show{
+      display:flex;
+    }
+
+    .auth-card{
+      width:min(980px,100%);
+      min-height:580px;
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:18px;
+      background:linear-gradient(180deg, rgba(15,17,25,.98), rgba(10,12,18,.97));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:34px;
+      overflow:hidden;
+      box-shadow:0 30px 80px rgba(0,0,0,.45);
+      position:relative;
     }
 
-    @media (max-width: 1100px){
-      .layout{grid-template-columns:1fr}
-      .sidebar{
-        position:relative;
-        top:0;
-        height:auto;
-      }
+    .auth-left{
+      padding:36px;
+      background:
+        radial-gradient(circle at top right, rgba(124,92,255,.22), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(89,223,255,.14), transparent 25%),
+        linear-gradient(180deg, rgba(20,23,35,.98), rgba(15,18,29,.96));
+      border-left:1px solid rgba(255,255,255,.06);
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .auth-left h3{
+      margin:0 0 14px;
+      font-size:38px;
+      line-height:1.3;
+    }
+
+    .auth-left p{
+      color:var(--muted);
+      line-height:2;
+      margin:0 0 18px;
+      font-size:15px;
+    }
+
+    .auth-stat{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .auth-stat .box{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:20px;
+      padding:18px;
+    }
+
+    .auth-stat .box b{
+      display:block;
+      font-size:22px;
+      margin-bottom:6px;
+    }
+
+    .auth-right{
+      padding:36px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .login-form{
+      width:100%;
+      max-width:390px;
+    }
+
+    .login-form h4{
+      margin:0 0 8px;
+      font-size:30px;
+    }
+
+    .login-form .sub{
+      color:var(--muted);
+      line-height:1.8;
+      font-size:14px;
+      margin-bottom:22px;
+    }
+
+    .login-form .field{
+      grid-column:span 12;
+      margin-bottom:14px;
+    }
+
+    .close-auth{
+      position:absolute;
+      top:18px;
+      left:18px;
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      border:none;
+      cursor:pointer;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+      font-size:20px;
+    }
+
+    .status-bar{
+      margin-top:16px;
+      color:#bfc7df;
+      font-size:13px;
+    }
+
+    .footer{
+      margin:26px 0 8px;
+      padding:18px;
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:24px;
+    }
+
+    @media (max-width:1200px){
+      .services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .cards-row{grid-template-columns:1fr 1fr}
+      .portal-grid{grid-template-columns:1fr}
+      .portal-sidebar{position:relative;top:0}
       .hero{grid-template-columns:1fr}
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .quick-links{grid-template-columns:1fr 1fr}
     }
 
-    @media (max-width: 700px){
-      .content{padding:16px}
-      .stats{grid-template-columns:1fr}
+    @media (max-width:760px){
+      .app{padding:12px}
+      .topbar{padding:12px}
+      .brand-text h1{font-size:20px}
+      .hero-main{padding:22px}
+      .hero-main h2{font-size:30px}
+      .services-grid{grid-template-columns:1fr}
+      .cards-row{grid-template-columns:1fr}
       .field,.field.third{grid-column:span 12}
-      .quick-links{grid-template-columns:1fr}
-      .split{grid-template-columns:1fr}
-      .topbar{padding:12px 14px}
-      .brand{font-size:18px}
-      .hero h1{font-size:26px}
+      .auth-card{grid-template-columns:1fr}
+      .auth-left{display:none}
+      .service-card{min-height:300px}
     }
   </style>
 </head>
 <body>
-
-  <div class="topbar">
-    <div class="brand">
-      <div class="brand-badge">🏥</div>
-      <div>منصة سمو | وزارة الصحة</div>
-    </div>
-    <div class="top-actions">
-      <div class="ghost-note">نسخة لعب RP وليست جهة حكومية حقيقية</div>
-      <button class="btn btn-light" onclick="showSection('employee-login')">دخول الموظفين</button>
-    </div>
+  <div class="bg-blur">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
   </div>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <h3>الخدمات الصحية</h3>
-      <button class="nav-btn active" onclick="showSection('dashboard', this)">الرئيسية الصحية</button>
-      <button class="nav-btn" onclick="showSection('appointments', this)">حجز موعد</button>
-      <button class="nav-btn" onclick="showSection('my-appointments', this)">مواعيدي</button>
-      <button class="nav-btn" onclick="showSection('medical-record', this)">السجل الطبي</button>
-      <button class="nav-btn" onclick="showSection('sick-leave', this)">الإجازات المرضية</button>
-      <button class="nav-btn" onclick="showSection('reports', this)">التقارير الطبية</button>
-      <button class="nav-btn" onclick="showSection('vaccines', this)">التطعيمات</button>
-      <button class="nav-btn" onclick="showSection('ambulance', this)">طلب إسعاف</button>
-      <button class="nav-btn" onclick="showSection('employee-login', this)">بوابة الموظفين</button>
-    </aside>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-logo">س</div>
+        <div class="brand-text">
+          <h1>منصة سمو</h1>
+          <p>بوابة خدمات RP متكاملة بتصميم فاخر ومناسب لجميع الأجهزة</p>
+        </div>
+      </div>
 
-    <main class="content">
+      <div class="top-actions">
+        <div class="pill">نسخة لعب / Roleplay</div>
+        <div class="pill" id="employeeStatus">حالة الموظف: غير مسجل</div>
+        <button class="btn btn-soft" id="backToHomeBtn">الرئيسية</button>
+        <button class="btn btn-primary" id="openAuthBtn">دخول الموظفين</button>
+        <button class="btn btn-danger hidden" id="logoutBtn">تسجيل خروج الموظف</button>
+      </div>
+    </header>
 
-      <section id="dashboard" class="section active">
-        <div class="hero">
-          <div>
-            <h1>مرحبًا بك في خدمات وزارة الصحة ضمن منصة سمو</h1>
-            <p>
-              بوابة صحية رقمية للعبة فقط، تتيح للمواطنين والموظفين إدارة المواعيد، عرض التقارير الطبية،
-              إصدار الإجازات المرضية، متابعة التطعيمات، وتقديم طلبات الإسعاف بشكل مرتب وسريع.
+    <section class="hero">
+      <div class="hero-main">
+        <div class="hero-badge">✨ منصة رقمية منظمة، سريعة، وفخمة جدًا</div>
+        <h2>كل خدماتك في مكان واحد<br>بواجهة حديثة وثلاثية الإحساس</h2>
+        <p>
+          تم ترتيب المنصة بشكل واضح ومريح، مع بطاقات خدمات كبيرة وألوان فخمة، ودخول موظفين منفصل.
+          أي خدمة خاصة بالموظفين مثل إصدار الإجازات أو تقارير المرضى لا يمكن الوصول لها إلا بعد تسجيل الدخول كموظف.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToServices()">استعراض الخدمات</button>
+          <button class="btn btn-soft" onclick="openAuth()">تسجيل دخول الموظف</button>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div>
+          <h3>تنظيم كامل للخدمات</h3>
+          <p>
+            البطاقات مرتبة بأسلوب شبكي واضح، مناسب للجوال والتابلت والكمبيوتر،
+            ومع كل قسم يمكن فتح بوابته بشكل مستقل مع لوحة خدماته الخاصة.
+          </p>
+        </div>
+
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <span class="big">9</span>
+            أقسام رئيسية
+          </div>
+          <div class="mini-stat">
+            <span class="big">Responsive</span>
+            لجميع الأجهزة
+          </div>
+          <div class="mini-stat">
+            <span class="big">Private</span>
+            خدمات الموظف مخفية
+          </div>
+          <div class="mini-stat">
+            <span class="big">3D</span>
+            تأثيرات بطاقات فخمة
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="servicesSection">
+      <div class="section-head">
+        <div>
+          <h3>الخدمات الرئيسية</h3>
+          <p>بنفس أسلوب الشكل الذي تريده، مع تحسينات فخمة وأوضح</p>
+        </div>
+      </div>
+
+      <div class="services-grid" id="servicesGrid">
+        <div class="service-card gold" data-service="religion">
+          <div class="icon-wrap">🕌</div>
+          <h4 class="service-title">الدينية</h4>
+          <p class="service-desc">الخدمات الدينية، التصاريح، الأنشطة، والطلبات الخاصة بهذا القطاع داخل اللعبة.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card red" data-service="health">
+          <div class="icon-wrap">🫀</div>
+          <h4 class="service-title">الصحة</h4>
+          <p class="service-desc">حجز مواعيد، الملفات الصحية، الإجازات المرضية، تقارير المرضى، وخدمات الموظفين الصحية.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card pink" data-service="family">
+          <div class="icon-wrap">👨‍👩‍👧</div>
+          <h4 class="service-title">الشخصية والأسرة</h4>
+          <p class="service-desc">الملفات الشخصية، الأسرة، البيانات الاجتماعية، والخدمات المتعلقة بالمستخدم.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card green" data-service="traffic">
+          <div class="icon-wrap">🚘</div>
+          <h4 class="service-title">المركبات والمرور</h4>
+          <p class="service-desc">لوحات، مركبات، مخالفات، وفحص الطلبات المرورية والخدمات المتعلقة بالتنقل.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card olive" data-service="finance">
+          <div class="icon-wrap">💹</div>
+          <h4 class="service-title">التجارة والمالية</h4>
+          <p class="service-desc">التراخيص، المعاملات، المدفوعات، السجلات المالية، وخدمات الأنشطة التجارية.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card blue" data-service="education">
+          <div class="icon-wrap">🎓</div>
+          <h4 class="service-title">التعليم</h4>
+          <p class="service-desc">القبول، السجلات الدراسية، الشهادات، والأنظمة التعليمية داخل اللعبة.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card violet" data-service="tech">
+          <div class="icon-wrap">🖥️</div>
+          <h4 class="service-title">الاتصالات والتقنية</h4>
+          <p class="service-desc">الخدمات الإلكترونية، الأنظمة، الدعم الفني، والبوابات الرقمية والخوادم.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card purple" data-service="tourism">
+          <div class="icon-wrap">🗓️</div>
+          <h4 class="service-title">السياحة والفعاليات</h4>
+          <p class="service-desc">الحجوزات، الفعاليات، التذاكر، والتصاريح الخاصة بالوجهات والأنشطة.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+
+        <div class="service-card cyan" data-service="municipal">
+          <div class="icon-wrap">🏠</div>
+          <h4 class="service-title">البلديات والعقارات</h4>
+          <p class="service-desc">العقارات، الأراضي، الرخص، البلاغات، وكل ما يتعلق بالبلديات والممتلكات.</p>
+          <div class="service-footer"><button class="open-btn">فتح القسم</button></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="portal" id="healthPortal">
+      <div class="section-head">
+        <div>
+          <h3>بوابة الصحة</h3>
+          <p>خدمات المستخدم العامة + خدمات الموظفين الخاصة بعد تسجيل الدخول</p>
+        </div>
+      </div>
+
+      <div class="portal-grid">
+        <aside class="portal-sidebar">
+          <button class="portal-nav-btn active" data-tab="health-home">الرئيسية الصحية</button>
+          <button class="portal-nav-btn" data-tab="health-appointment">حجز موعد</button>
+          <button class="portal-nav-btn" data-tab="health-my-appointments">مواعيدي</button>
+          <button class="portal-nav-btn" data-tab="health-records">ملفي الصحي</button>
+          <button class="portal-nav-btn employee-only" data-tab="health-employee-panel">لوحة الموظف</button>
+          <button class="portal-nav-btn employee-only" data-tab="health-sickleave">إصدار إجازة مرضية</button>
+          <button class="portal-nav-btn employee-only" data-tab="health-reports">تقارير المرضى</button>
+        </aside>
+
+        <div>
+          <div class="panel tab-panel" id="health-home">
+            <div class="notice">
+              هذه المنصة مخصصة للعبة فقط. الخدمات العامة متاحة للجميع، أما خدمات الموظفين مثل الإجازات والتقارير الطبية فهي مخفية بالكامل ولا تظهر إلا بعد تسجيل دخول الموظف.
+            </div>
+
+            <h4>مرحبًا بك في قسم الصحة</h4>
+            <p class="lead">
+              تم ترتيب هذا القسم ليكون نظيفًا وسهلًا جدًا. المستخدم يقدر يحجز ويشوف مواعيده وملفه الصحي،
+              والموظف يقدر بعد تسجيل الدخول يدخل على اللوحة الخاصة به ويصدر الإجازات ويكتب تقارير المرضى.
             </p>
-            <div class="toolbar">
-              <button class="btn btn-light" onclick="showSection('appointments')">احجز موعد الآن</button>
-              <button class="btn btn-light" onclick="showSection('ambulance')">طلب إسعاف</button>
-            </div>
-          </div>
-          <div class="hero-card">
-            <div><strong>الجهة:</strong> وزارة الصحة</div>
-            <div><strong>نوع المنصة:</strong> خدمات RP داخل اللعبة</div>
-            <div><strong>الحالة:</strong> <span class="badge success">متاحة الآن</span></div>
-            <div><strong>الخدمات النشطة:</strong> مواعيد، تقارير، تطعيمات، سجلات، إسعاف</div>
-          </div>
-        </div>
 
-        <div class="stats">
-          <div class="stat">
-            <h4>المواعيد المسجلة</h4>
-            <div class="num" id="statAppointments">0</div>
-          </div>
-          <div class="stat">
-            <h4>الإجازات المرضية</h4>
-            <div class="num" id="statLeaves">0</div>
-          </div>
-          <div class="stat">
-            <h4>التقارير الطبية</h4>
-            <div class="num" id="statReports">0</div>
-          </div>
-          <div class="stat">
-            <h4>طلبات الإسعاف</h4>
-            <div class="num" id="statAmbulance">0</div>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="card span-8">
-            <div class="title-row">
-              <h2>الوصول السريع</h2>
-              <span class="muted">ابدأ بأهم الخدمات مباشرة</span>
-            </div>
-            <div class="quick-links">
-              <div class="quick-link" onclick="showSection('appointments')">
+            <div class="cards-row">
+              <div class="feature-box">
                 <strong>📅 حجز موعد</strong>
-                <div class="muted">حجز زيارة لمستشفى أو مركز صحي</div>
+                <span>إنشاء موعد جديد للمراجعة داخل النظام الصحي.</span>
               </div>
-              <div class="quick-link" onclick="showSection('reports')">
-                <strong>🩺 التقارير الطبية</strong>
-                <div class="muted">إصدار ورفع التقارير الصحية</div>
+              <div class="feature-box">
+                <strong>📋 ملف صحي</strong>
+                <span>عرض البيانات الصحية الأساسية للمستخدم.</span>
               </div>
-              <div class="quick-link" onclick="showSection('sick-leave')">
-                <strong>📝 الإجازات المرضية</strong>
-                <div class="muted">تقديم طلب إجازة مرضية</div>
-              </div>
-              <div class="quick-link" onclick="showSection('vaccines')">
-                <strong>💉 التطعيمات</strong>
-                <div class="muted">عرض وتحديث الجرعات المسجلة</div>
-              </div>
-              <div class="quick-link" onclick="showSection('medical-record')">
-                <strong>📂 السجل الطبي</strong>
-                <div class="muted">عرض الملفات والتاريخ الصحي</div>
-              </div>
-              <div class="quick-link" onclick="showSection('ambulance')">
-                <strong>🚑 طلب إسعاف</strong>
-                <div class="muted">إرسال بلاغ إسعافي سريع</div>
+              <div class="feature-box employee-only">
+                <strong>🩺 خدمات موظف</strong>
+                <span>تقارير وإجازات وخدمات داخلية خاصة فقط بالموظفين.</span>
               </div>
             </div>
           </div>
 
-          <div class="card span-4">
-            <div class="title-row">
-              <h2>تنبيه</h2>
-            </div>
-            <div class="note-box">
-              هذه الواجهة مخصصة للعبة فقط. جميع البيانات تجريبية ويتم حفظها محليًا داخل المتصفح لعرض النظام بشكل واقعي.
-            </div>
-          </div>
-        </div>
-      </section>
+          <div class="panel tab-panel hidden" id="health-appointment">
+            <h4>حجز موعد صحي</h4>
+            <p class="lead">نموذج منظم وسريع لحجز المواعيد، مع عرض المواعيد في جدول مرتب.</p>
 
-      <section id="appointments" class="section">
-        <div class="card">
-          <div class="title-row">
-            <h2>حجز موعد صحي</h2>
-            <span class="muted">املأ البيانات لتسجيل موعد جديد</span>
-          </div>
-          <form id="appointmentForm">
-            <div class="field">
-              <label>الاسم الكامل</label>
-              <input type="text" id="apptName" required placeholder="مثال: محمد خالد" />
-            </div>
-            <div class="field">
-              <label>رقم الهوية / رقم اللاعب</label>
-              <input type="text" id="apptId" required placeholder="مثال: 10482" />
-            </div>
-            <div class="field">
-              <label>المدينة / المنطقة</label>
-              <select id="apptCity" required>
-                <option value="">اختر المنطقة</option>
-                <option>الرياض</option>
-                <option>جدة</option>
-                <option>الدمام</option>
-                <option>مكة المكرمة</option>
-                <option>المدينة المنورة</option>
-                <option>أبها</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>المنشأة الصحية</label>
-              <select id="apptFacility" required>
-                <option value="">اختر المنشأة</option>
-                <option>مستشفى الملك فهد</option>
-                <option>مدينة الملك سعود الطبية</option>
-                <option>مركز صحي النخيل</option>
-                <option>مستشفى الحرس</option>
-                <option>مركز الرعاية الشامل</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>التخصص</label>
-              <select id="apptDept" required>
-                <option value="">اختر التخصص</option>
-                <option>طب عام</option>
-                <option>طوارئ</option>
-                <option>أسنان</option>
-                <option>جلدية</option>
-                <option>قلب</option>
-                <option>عظام</option>
-                <option>عيون</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>نوع الزيارة</label>
-              <select id="apptType" required>
-                <option value="">اختر نوع الزيارة</option>
-                <option>زيارة جديدة</option>
-                <option>مراجعة</option>
-                <option>استشارة</option>
-                <option>حالة عاجلة</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>التاريخ</label>
-              <input type="date" id="apptDate" required />
-            </div>
-            <div class="field">
-              <label>الوقت</label>
-              <input type="time" id="apptTime" required />
-            </div>
-            <div class="field full">
-              <label>ملاحظات إضافية</label>
-              <textarea id="apptNotes" placeholder="اكتب وصفًا مختصرًا للحالة أو سبب الموعد"></textarea>
-            </div>
-            <div class="field full">
-              <div class="toolbar">
-                <button type="submit" class="btn btn-primary">تأكيد الحجز</button>
-                <button type="reset" class="btn btn-light">إعادة تعيين</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </section>
-
-      <section id="my-appointments" class="section">
-        <div class="card">
-          <div class="title-row">
-            <h2>مواعيدي</h2>
-            <div class="toolbar">
-              <button class="btn btn-light" onclick="seedAppointments()">إضافة بيانات تجريبية</button>
-              <button class="btn btn-danger" onclick="clearAppointments()">حذف الكل</button>
-            </div>
-          </div>
-          <div id="appointmentsTableWrap"></div>
-        </div>
-      </section>
-
-      <section id="medical-record" class="section">
-        <div class="grid">
-          <div class="card span-6">
-            <div class="title-row">
-              <h2>إضافة سجل طبي</h2>
-            </div>
-            <form id="recordForm">
+            <form id="appointmentForm" class="form-grid">
               <div class="field">
-                <label>اسم المريض</label>
-                <input type="text" id="recordName" required />
+                <label>الاسم الكامل</label>
+                <input class="input" id="apptName" required placeholder="مثال: خالد محمد" />
               </div>
               <div class="field">
                 <label>رقم الهوية / رقم اللاعب</label>
-                <input type="text" id="recordId" required />
+                <input class="input" id="apptId" required placeholder="مثال: 10424" />
               </div>
               <div class="field">
-                <label>الفصيلة</label>
-                <select id="recordBlood" required>
-                  <option value="">اختر الفصيلة</option>
-                  <option>O+</option>
-                  <option>O-</option>
-                  <option>A+</option>
-                  <option>A-</option>
-                  <option>B+</option>
-                  <option>B-</option>
-                  <option>AB+</option>
-                  <option>AB-</option>
+                <label>المنشأة</label>
+                <select class="select" id="apptFacility" required>
+                  <option value="">اختر</option>
+                  <option>مستشفى العاصمة</option>
+                  <option>مركز الرعاية الشامل</option>
+                  <option>عيادة الطوارئ</option>
+                  <option>المجمع الصحي الأول</option>
                 </select>
               </div>
               <div class="field">
-                <label>الحساسية</label>
-                <input type="text" id="recordAllergy" placeholder="مثال: بنسلين" />
+                <label>القسم</label>
+                <select class="select" id="apptDept" required>
+                  <option value="">اختر</option>
+                  <option>طب عام</option>
+                  <option>طوارئ</option>
+                  <option>أسنان</option>
+                  <option>باطنية</option>
+                  <option>عظام</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>التاريخ</label>
+                <input class="input" id="apptDate" type="date" required />
+              </div>
+              <div class="field">
+                <label>الوقت</label>
+                <input class="input" id="apptTime" type="time" required />
               </div>
               <div class="field full">
-                <label>التاريخ المرضي</label>
-                <textarea id="recordHistory" placeholder="مثال: ضغط، سكر، عمليات سابقة"></textarea>
+                <label>ملاحظات</label>
+                <textarea class="textarea" id="apptNotes" placeholder="سبب الزيارة أو ملاحظات إضافية"></textarea>
               </div>
               <div class="field full">
-                <button type="submit" class="btn btn-primary">حفظ السجل الطبي</button>
+                <button class="btn btn-primary" type="submit">تأكيد الحجز</button>
               </div>
             </form>
           </div>
 
-          <div class="card span-6">
-            <div class="title-row">
-              <h2>السجلات المحفوظة</h2>
-              <button class="btn btn-danger" onclick="clearRecords()">حذف السجلات</button>
-            </div>
-            <div id="recordsList"></div>
+          <div class="panel tab-panel hidden" id="health-my-appointments">
+            <h4>مواعيدي</h4>
+            <p class="lead">كل المواعيد المحفوظة تظهر هنا بشكل مرتب.</p>
+            <div id="appointmentsWrap"></div>
           </div>
-        </div>
-      </section>
 
-      <section id="sick-leave" class="section">
-        <div class="split">
-          <div class="card">
-            <div class="title-row">
-              <h2>طلب إجازة مرضية</h2>
+          <div class="panel tab-panel hidden" id="health-records">
+            <h4>ملفي الصحي</h4>
+            <p class="lead">عرض بيانات صحية تجريبية للمستخدم داخل اللعبة.</p>
+            <div class="cards-row">
+              <div class="feature-box">
+                <strong>فصيلة الدم</strong>
+                <span>O+</span>
+              </div>
+              <div class="feature-box">
+                <strong>الحساسية</strong>
+                <span>لا يوجد</span>
+              </div>
+              <div class="feature-box">
+                <strong>الحالة</strong>
+                <span>نشط في النظام الصحي</span>
+              </div>
             </div>
-            <form id="leaveForm">
+          </div>
+
+          <div class="panel tab-panel hidden employee-only" id="health-employee-panel">
+            <h4>لوحة الموظف الصحية</h4>
+            <p class="lead">هذه اللوحة لا تظهر إلا بعد تسجيل الدخول كموظف.</p>
+            <div class="cards-row">
+              <div class="feature-box">
+                <strong>👨‍⚕️ المسمى</strong>
+                <span id="employeeJobText">لم يتم تحديده</span>
+              </div>
+              <div class="feature-box">
+                <strong>🏥 القسم</strong>
+                <span id="employeeDeptText">لم يتم تحديده</span>
+              </div>
+              <div class="feature-box">
+                <strong>🔐 الحالة</strong>
+                <span>تم توثيق الوصول إلى أدوات الموظف الخاصة</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel tab-panel hidden employee-only" id="health-sickleave">
+            <h4>إصدار إجازة مرضية</h4>
+            <p class="lead">خدمة خاصة بالموظفين فقط لإصدار إجازات المرضى.</p>
+
+            <form id="leaveForm" class="form-grid">
               <div class="field">
-                <label>الاسم الكامل</label>
-                <input type="text" id="leaveName" required />
+                <label>اسم المريض</label>
+                <input class="input" id="leavePatient" required />
               </div>
               <div class="field">
-                <label>جهة العمل</label>
-                <input type="text" id="leaveEmployer" required />
+                <label>رقم الهوية / اللاعب</label>
+                <input class="input" id="leaveIdentity" required />
               </div>
               <div class="field">
                 <label>من تاريخ</label>
-                <input type="date" id="leaveStart" required />
+                <input class="input" id="leaveFrom" type="date" required />
               </div>
               <div class="field">
                 <label>إلى تاريخ</label>
-                <input type="date" id="leaveEnd" required />
+                <input class="input" id="leaveTo" type="date" required />
               </div>
               <div class="field full">
                 <label>سبب الإجازة</label>
-                <textarea id="leaveReason" required></textarea>
+                <textarea class="textarea" id="leaveReason" required></textarea>
               </div>
               <div class="field full">
-                <button type="submit" class="btn btn-primary">إصدار الإجازة</button>
+                <button class="btn btn-primary" type="submit">إصدار الإجازة</button>
               </div>
             </form>
+
+            <div style="margin-top:18px" id="leaveWrap"></div>
           </div>
 
-          <div class="card">
-            <div class="title-row">
-              <h2>الإجازات المصدرة</h2>
-            </div>
-            <div id="leavesList"></div>
-          </div>
-        </div>
-      </section>
+          <div class="panel tab-panel hidden employee-only" id="health-reports">
+            <h4>تقارير المرضى</h4>
+            <p class="lead">كتابة تقارير الحالات الطبية، ولا يراها إلا الموظف بعد تسجيل الدخول.</p>
 
-      <section id="reports" class="section">
-        <div class="split">
-          <div class="card">
-            <div class="title-row">
-              <h2>إصدار تقرير طبي</h2>
-            </div>
-            <form id="reportForm">
+            <form id="reportForm" class="form-grid">
               <div class="field">
                 <label>اسم المريض</label>
-                <input type="text" id="reportName" required />
+                <input class="input" id="reportPatient" required />
               </div>
               <div class="field">
                 <label>نوع التقرير</label>
-                <select id="reportType" required>
-                  <option value="">اختر النوع</option>
+                <select class="select" id="reportType" required>
+                  <option value="">اختر</option>
                   <option>تقرير معاينة</option>
-                  <option>تقرير تنويم</option>
-                  <option>تقرير أشعة</option>
-                  <option>تقرير مختبر</option>
                   <option>تقرير إصابة</option>
+                  <option>تقرير تنويم</option>
+                  <option>تقرير طوارئ</option>
                 </select>
               </div>
               <div class="field full">
-                <label>تفاصيل التقرير</label>
-                <textarea id="reportDetails" required></textarea>
+                <label>التفاصيل</label>
+                <textarea class="textarea" id="reportDetails" required></textarea>
               </div>
               <div class="field full">
-                <button type="submit" class="btn btn-primary">حفظ التقرير</button>
+                <button class="btn btn-primary" type="submit">حفظ التقرير</button>
               </div>
             </form>
-          </div>
 
-          <div class="card">
-            <div class="title-row">
-              <h2>التقارير الطبية</h2>
-            </div>
-            <div id="reportsList"></div>
+            <div style="margin-top:18px" id="reportWrap"></div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="vaccines" class="section">
-        <div class="grid">
-          <div class="card span-6">
-            <div class="title-row">
-              <h2>إضافة تطعيم</h2>
-            </div>
-            <form id="vaccineForm">
-              <div class="field">
-                <label>اسم المواطن</label>
-                <input type="text" id="vacName" required />
-              </div>
-              <div class="field">
-                <label>اسم اللقاح</label>
-                <select id="vacNameField" required>
-                  <option value="">اختر اللقاح</option>
-                  <option>كوفيد-19</option>
-                  <option>إنفلونزا موسمية</option>
-                  <option>الكبد الوبائي</option>
-                  <option>الحمى الشوكية</option>
-                  <option>شلل الأطفال</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>رقم الجرعة</label>
-                <select id="vacDose" required>
-                  <option value="">اختر الجرعة</option>
-                  <option>الأولى</option>
-                  <option>الثانية</option>
-                  <option>الثالثة</option>
-                  <option>منشطة</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>تاريخ التطعيم</label>
-                <input type="date" id="vacDate" required />
-              </div>
-              <div class="field full">
-                <button type="submit" class="btn btn-primary">تسجيل التطعيم</button>
-              </div>
-            </form>
+    <footer class="footer">
+      منصة سمو - واجهة RP منظمة وفخمة. خدمات الموظفين الخاصة لا تظهر إلا بعد تسجيل الدخول.
+    </footer>
+  </div>
+
+  <div class="auth-modal" id="authModal">
+    <div class="auth-card">
+      <button class="close-auth" id="closeAuthBtn">×</button>
+
+      <div class="auth-left">
+        <h3>بوابة دخول الموظفين<br>بأسلوب فاخر وآمن</h3>
+        <p>
+          بعد تسجيل الدخول، تنفتح لك الأدوات الخاصة بالموظفين فقط مثل:
+          إصدار الإجازات المرضية، كتابة تقارير المرضى، والدخول إلى لوحة الموظف.
+        </p>
+
+        <div class="auth-stat">
+          <div class="box">
+            <b>Private</b>
+            أدوات خاصة
           </div>
-
-          <div class="card span-6">
-            <div class="title-row">
-              <h2>سجل التطعيمات</h2>
-            </div>
-            <div id="vaccinesList"></div>
+          <div class="box">
+            <b>Secure UI</b>
+            واجهة دخول فخمة
+          </div>
+          <div class="box">
+            <b>Roleplay</b>
+            مخصصة للعبة
+          </div>
+          <div class="box">
+            <b>Responsive</b>
+            لكل الأجهزة
           </div>
         </div>
-      </section>
+      </div>
 
-      <section id="ambulance" class="section">
-        <div class="split">
-          <div class="card">
-            <div class="title-row">
-              <h2>طلب إسعاف</h2>
-              <span class="badge danger">عاجل</span>
-            </div>
-            <form id="ambulanceForm">
-              <div class="field">
-                <label>اسم المبلغ</label>
-                <input type="text" id="ambName" required />
-              </div>
-              <div class="field">
-                <label>الموقع</label>
-                <input type="text" id="ambLocation" required placeholder="مثال: حي المطار - الشارع العام" />
-              </div>
-              <div class="field">
-                <label>نوع الحالة</label>
-                <select id="ambType" required>
-                  <option value="">اختر نوع الحالة</option>
-                  <option>حادث مروري</option>
-                  <option>إغماء</option>
-                  <option>نزيف</option>
-                  <option>توقف تنفس</option>
-                  <option>ألم شديد</option>
-                </select>
-              </div>
-              <div class="field">
-                <label>مستوى الخطورة</label>
-                <select id="ambLevel" required>
-                  <option value="">اختر المستوى</option>
-                  <option>منخفض</option>
-                  <option>متوسط</option>
-                  <option>مرتفع</option>
-                  <option>حرج</option>
-                </select>
-              </div>
-              <div class="field full">
-                <label>وصف الحالة</label>
-                <textarea id="ambDesc" required placeholder="اكتب وصفًا مختصرًا للحالة"></textarea>
-              </div>
-              <div class="field full">
-                <button type="submit" class="btn btn-danger">إرسال البلاغ</button>
-              </div>
-            </form>
+      <div class="auth-right">
+        <form class="login-form" id="employeeLoginForm">
+          <h4>تسجيل دخول الموظف</h4>
+          <div class="sub">أدخل البيانات لتفعيل أدوات الموظف الخاصة داخل المنصة.</div>
+
+          <div class="field">
+            <label>الاسم الوظيفي</label>
+            <input class="input" id="empName" required placeholder="مثال: د. سلمان" />
           </div>
 
-          <div class="card">
-            <div class="title-row">
-              <h2>بلاغات الإسعاف</h2>
-            </div>
-            <div id="ambulanceList"></div>
+          <div class="field">
+            <label>الرقم الوظيفي</label>
+            <input class="input" id="empNumber" required placeholder="مثال: MOH-2004" />
           </div>
-        </div>
-      </section>
 
-      <section id="employee-login" class="section">
-        <div class="card login-box">
-          <div class="login-header">
-            <h2>بوابة موظفي وزارة الصحة</h2>
-            <div class="muted">تسجيل دخول تجريبي للعبة فقط</div>
+          <div class="field">
+            <label>القسم</label>
+            <select class="select" id="empDepartment" required>
+              <option value="">اختر القسم</option>
+              <option>الاستقبال</option>
+              <option>الطوارئ</option>
+              <option>العيادات</option>
+              <option>السجلات الطبية</option>
+              <option>الإدارة الصحية</option>
+            </select>
           </div>
-          <form id="employeeForm">
-            <div class="field full">
-              <label>الرقم الوظيفي</label>
-              <input type="text" id="empId" required placeholder="مثال: MOH-2041" />
-            </div>
-            <div class="field full">
-              <label>كلمة المرور</label>
-              <input type="password" id="empPassword" required placeholder="••••••••" />
-            </div>
-            <div class="field full">
-              <label>القسم</label>
-              <select id="empDepartment" required>
-                <option value="">اختر القسم</option>
-                <option>الاستقبال</option>
-                <option>الطوارئ</option>
-                <option>العيادات</option>
-                <option>السجلات الطبية</option>
-                <option>الإدارة</option>
-              </select>
-            </div>
-            <div class="field full">
-              <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
-            </div>
-          </form>
-          <div id="employeeLoginResult" class="footer-note">لم يتم تسجيل الدخول بعد</div>
-        </div>
-      </section>
 
-    </main>
+          <div class="field">
+            <label>كلمة المرور</label>
+            <input class="input" id="empPassword" type="password" required placeholder="••••••••" />
+          </div>
+
+          <button class="btn btn-primary" type="submit" style="width:100%;margin-top:8px">دخول الموظف</button>
+          <div class="status-bar" id="loginStatus">لم يتم تسجيل الدخول بعد</div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script>
-    const KEYS = {
-      appointments: 'sumou_moh_appointments',
-      records: 'sumou_moh_records',
-      leaves: 'sumou_moh_leaves',
-      reports: 'sumou_moh_reports',
-      vaccines: 'sumou_moh_vaccines',
-      ambulance: 'sumou_moh_ambulance'
+    const state = {
+      employeeLoggedIn: false,
+      employee: null
     };
 
-    function getData(key){
+    const storageKeys = {
+      appointments: 'sumou_health_appointments_v2',
+      leaves: 'sumou_health_leaves_v2',
+      reports: 'sumou_health_reports_v2'
+    };
+
+    function getStored(key){
       return JSON.parse(localStorage.getItem(key) || '[]');
     }
 
-    function setData(key, data){
-      localStorage.setItem(key, JSON.stringify(data));
-      refreshAll();
+    function setStored(key, value){
+      localStorage.setItem(key, JSON.stringify(value));
     }
 
-    function showSection(id, btn){
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+    function scrollToServices(){
+      document.getElementById('servicesSection').scrollIntoView({behavior:'smooth'});
+    }
 
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      if(btn) btn.classList.add('active');
-      else {
-        const targetBtn = [...document.querySelectorAll('.nav-btn')].find(b => b.getAttribute('onclick')?.includes(`'${id}'`));
-        if(targetBtn) targetBtn.classList.add('active');
+    const authModal = document.getElementById('authModal');
+    const openAuthBtn = document.getElementById('openAuthBtn');
+    const closeAuthBtn = document.getElementById('closeAuthBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const employeeStatus = document.getElementById('employeeStatus');
+
+    function openAuth(){
+      authModal.classList.add('show');
+    }
+
+    function closeAuth(){
+      authModal.classList.remove('show');
+    }
+
+    openAuthBtn.addEventListener('click', openAuth);
+    closeAuthBtn.addEventListener('click', closeAuth);
+    authModal.addEventListener('click', (e) => {
+      if(e.target === authModal) closeAuth();
+    });
+
+    function updateEmployeeUI(){
+      const employeeOnly = document.querySelectorAll('.employee-only');
+      const employeeNavButtons = document.querySelectorAll('.portal-nav-btn.employee-only');
+
+      if(state.employeeLoggedIn){
+        employeeOnly.forEach(el => el.classList.add('show'));
+        employeeNavButtons.forEach(el => el.classList.add('show'));
+        logoutBtn.classList.remove('hidden');
+        openAuthBtn.classList.add('hidden');
+        employeeStatus.textContent = `حالة الموظف: ${state.employee.name}`;
+        document.getElementById('employeeJobText').textContent = state.employee.name;
+        document.getElementById('employeeDeptText').textContent = state.employee.department;
+      } else {
+        employeeOnly.forEach(el => el.classList.remove('show'));
+        employeeNavButtons.forEach(el => el.classList.remove('show'));
+        logoutBtn.classList.add('hidden');
+        openAuthBtn.classList.remove('hidden');
+        employeeStatus.textContent = 'حالة الموظف: غير مسجل';
+
+        const currentTab = document.querySelector('.portal-nav-btn.active');
+        if(currentTab && currentTab.classList.contains('employee-only')){
+          openHealthTab('health-home');
+        }
       }
     }
 
-    function formatDate(date){
-      if(!date) return '-';
-      return new Date(date).toLocaleDateString('ar-SA');
+    document.getElementById('employeeLoginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('empName').value.trim();
+      const number = document.getElementById('empNumber').value.trim();
+      const department = document.getElementById('empDepartment').value;
+      const password = document.getElementById('empPassword').value.trim();
+
+      if(!name || !number || !department || !password) return;
+
+      state.employeeLoggedIn = true;
+      state.employee = { name, number, department };
+      document.getElementById('loginStatus').textContent = `تم تسجيل الدخول بنجاح: ${name}`;
+      updateEmployeeUI();
+      closeAuth();
+      document.getElementById('healthPortal').classList.add('active');
+      openHealthTab('health-employee-panel');
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      state.employeeLoggedIn = false;
+      state.employee = null;
+      updateEmployeeUI();
+      openHealthTab('health-home');
+    });
+
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const service = card.dataset.service;
+        if(service === 'health'){
+          document.getElementById('healthPortal').classList.add('active');
+          document.getElementById('healthPortal').scrollIntoView({behavior:'smooth'});
+          openHealthTab('health-home');
+        } else {
+          alert('هذا القسم جاهز للشكل العام، وتقدر نبني تفاصيله بعده بنفس مستوى الصحة.');
+        }
+      });
+    });
+
+    const healthTabButtons = document.querySelectorAll('.portal-nav-btn');
+    function openHealthTab(id){
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+
+      healthTabButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === id);
+      });
     }
 
-    function renderEmpty(container, text){
-      container.innerHTML = `<div class="empty">${text}</div>`;
-    }
+    healthTabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if(btn.classList.contains('employee-only') && !state.employeeLoggedIn){
+          openAuth();
+          return;
+        }
+        openHealthTab(btn.dataset.tab);
+      });
+    });
 
-    function refreshStats(){
-      document.getElementById('statAppointments').textContent = getData(KEYS.appointments).length;
-      document.getElementById('statLeaves').textContent = getData(KEYS.leaves).length;
-      document.getElementById('statReports').textContent = getData(KEYS.reports).length;
-      document.getElementById('statAmbulance').textContent = getData(KEYS.ambulance).length;
-    }
+    document.getElementById('backToHomeBtn').addEventListener('click', () => {
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
 
     function renderAppointments(){
-      const data = getData(KEYS.appointments);
-      const wrap = document.getElementById('appointmentsTableWrap');
+      const wrap = document.getElementById('appointmentsWrap');
+      const data = getStored(storageKeys.appointments);
 
       if(!data.length){
-        return renderEmpty(wrap, 'لا توجد مواعيد مسجلة حاليًا');
+        wrap.innerHTML = `<div class="empty">لا توجد مواعيد محفوظة حتى الآن</div>`;
+        return;
       }
 
       wrap.innerHTML = `
-        <table>
-          <thead>
-            <tr>
-              <th>الاسم</th>
-              <th>الهوية</th>
-              <th>المنشأة</th>
-              <th>التخصص</th>
-              <th>التاريخ</th>
-              <th>الوقت</th>
-              <th>الحالة</th>
-              <th>إجراء</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${data.map((item, i) => `
+        <div class="table-wrap">
+          <table>
+            <thead>
               <tr>
-                <td>${item.name}</td>
-                <td>${item.id}</td>
-                <td>${item.facility}</td>
-                <td>${item.dept}</td>
-                <td>${item.date}</td>
-                <td>${item.time}</td>
-                <td><span class="badge pending">بانتظار المراجعة</span></td>
-                <td><button class="btn btn-danger" onclick="deleteItem('${KEYS.appointments}', ${i})">حذف</button></td>
+                <th>الاسم</th>
+                <th>الهوية</th>
+                <th>المنشأة</th>
+                <th>القسم</th>
+                <th>التاريخ</th>
+                <th>الوقت</th>
+                <th>الحالة</th>
               </tr>
-            `).join('')}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              ${data.map(item => `
+                <tr>
+                  <td>${item.name}</td>
+                  <td>${item.identity}</td>
+                  <td>${item.facility}</td>
+                  <td>${item.department}</td>
+                  <td>${item.date}</td>
+                  <td>${item.time}</td>
+                  <td><span class="tag warn">بانتظار المراجعة</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
       `;
     }
 
-    function renderRecords(){
-      const data = getData(KEYS.records);
-      const wrap = document.getElementById('recordsList');
-      if(!data.length) return renderEmpty(wrap, 'لا توجد سجلات طبية محفوظة');
-
-      wrap.innerHTML = `<div class="list">${
-        data.map((r, i) => `
-          <div class="item">
-            <strong>${r.name} <span class="badge info">${r.blood || 'غير محدد'}</span></strong>
-            <div class="muted">الهوية: ${r.id}</div>
-            <div>الحساسية: ${r.allergy || 'لا يوجد'}</div>
-            <div>التاريخ المرضي: ${r.history || 'لا يوجد'}</div>
-            <div style="margin-top:10px">
-              <button class="btn btn-danger" onclick="deleteItem('${KEYS.records}', ${i})">حذف</button>
-            </div>
-          </div>
-        `).join('')
-      }</div>`;
-    }
-
     function renderLeaves(){
-      const data = getData(KEYS.leaves);
-      const wrap = document.getElementById('leavesList');
-      if(!data.length) return renderEmpty(wrap, 'لا توجد إجازات مرضية');
+      const wrap = document.getElementById('leaveWrap');
+      const data = getStored(storageKeys.leaves);
 
-      wrap.innerHTML = `<div class="list">${
-        data.map((l, i) => `
-          <div class="item">
-            <strong>${l.name} <span class="badge success">مصدرة</span></strong>
-            <div class="muted">جهة العمل: ${l.employer}</div>
-            <div>الفترة: من ${l.start} إلى ${l.end}</div>
-            <div>السبب: ${l.reason}</div>
-            <div style="margin-top:10px">
-              <button class="btn btn-danger" onclick="deleteItem('${KEYS.leaves}', ${i})">حذف</button>
-            </div>
-          </div>
-        `).join('')
-      }</div>`;
+      if(!state.employeeLoggedIn){
+        wrap.innerHTML = `<div class="empty">هذه الخدمة خاصة بالموظفين</div>`;
+        return;
+      }
+
+      if(!data.length){
+        wrap.innerHTML = `<div class="empty">لا توجد إجازات مرضية صادرة حتى الآن</div>`;
+        return;
+      }
+
+      wrap.innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>المريض</th>
+                <th>الهوية</th>
+                <th>من</th>
+                <th>إلى</th>
+                <th>السبب</th>
+                <th>الموظف</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map(item => `
+                <tr>
+                  <td>${item.patient}</td>
+                  <td>${item.identity}</td>
+                  <td>${item.from}</td>
+                  <td>${item.to}</td>
+                  <td>${item.reason}</td>
+                  <td><span class="tag ok">${item.employee}</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
     }
 
     function renderReports(){
-      const data = getData(KEYS.reports);
-      const wrap = document.getElementById('reportsList');
-      if(!data.length) return renderEmpty(wrap, 'لا توجد تقارير طبية');
+      const wrap = document.getElementById('reportWrap');
+      const data = getStored(storageKeys.reports);
 
-      wrap.innerHTML = `<div class="list">${
-        data.map((r, i) => `
-          <div class="item">
-            <strong>${r.name} <span class="badge info">${r.type}</span></strong>
-            <div>${r.details}</div>
-            <div class="muted" style="margin-top:8px">تاريخ الإصدار: ${r.createdAt}</div>
-            <div style="margin-top:10px">
-              <button class="btn btn-danger" onclick="deleteItem('${KEYS.reports}', ${i})">حذف</button>
-            </div>
-          </div>
-        `).join('')
-      }</div>`;
-    }
-
-    function renderVaccines(){
-      const data = getData(KEYS.vaccines);
-      const wrap = document.getElementById('vaccinesList');
-      if(!data.length) return renderEmpty(wrap, 'لا توجد تطعيمات مسجلة');
-
-      wrap.innerHTML = `<div class="list">${
-        data.map((v, i) => `
-          <div class="item">
-            <strong>${v.name} <span class="badge success">${v.vaccine}</span></strong>
-            <div>الجرعة: ${v.dose}</div>
-            <div>التاريخ: ${v.date}</div>
-            <div style="margin-top:10px">
-              <button class="btn btn-danger" onclick="deleteItem('${KEYS.vaccines}', ${i})">حذف</button>
-            </div>
-          </div>
-        `).join('')
-      }</div>`;
-    }
-
-    function renderAmbulance(){
-      const data = getData(KEYS.ambulance);
-      const wrap = document.getElementById('ambulanceList');
-      if(!data.length) return renderEmpty(wrap, 'لا توجد بلاغات إسعافية');
-
-      wrap.innerHTML = `<div class="list">${
-        data.map((a, i) => `
-          <div class="item">
-            <strong>${a.name} <span class="badge danger">${a.level}</span></strong>
-            <div>الموقع: ${a.location}</div>
-            <div>نوع الحالة: ${a.type}</div>
-            <div>الوصف: ${a.desc}</div>
-            <div class="muted" style="margin-top:8px">وقت البلاغ: ${a.createdAt}</div>
-            <div style="margin-top:10px">
-              <button class="btn btn-danger" onclick="deleteItem('${KEYS.ambulance}', ${i})">حذف</button>
-            </div>
-          </div>
-        `).join('')
-      }</div>`;
-    }
-
-    function deleteItem(key, index){
-      const data = getData(key);
-      data.splice(index, 1);
-      setData(key, data);
-    }
-
-    function clearAppointments(){
-      if(confirm('هل تريد حذف جميع المواعيد؟')){
-        setData(KEYS.appointments, []);
+      if(!state.employeeLoggedIn){
+        wrap.innerHTML = `<div class="empty">هذه الخدمة خاصة بالموظفين</div>`;
+        return;
       }
-    }
 
-    function clearRecords(){
-      if(confirm('هل تريد حذف جميع السجلات الطبية؟')){
-        setData(KEYS.records, []);
+      if(!data.length){
+        wrap.innerHTML = `<div class="empty">لا توجد تقارير مرضى محفوظة حتى الآن</div>`;
+        return;
       }
+
+      wrap.innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>المريض</th>
+                <th>نوع التقرير</th>
+                <th>التفاصيل</th>
+                <th>الموظف</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map(item => `
+                <tr>
+                  <td>${item.patient}</td>
+                  <td><span class="tag info">${item.type}</span></td>
+                  <td>${item.details}</td>
+                  <td>${item.employee}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
     }
 
-    function seedAppointments(){
-      const current = getData(KEYS.appointments);
-      const sample = [
-        {
-          name:'أحمد سالم',
-          id:'10021',
-          city:'الرياض',
-          facility:'مستشفى الملك فهد',
-          dept:'طب عام',
-          type:'زيارة جديدة',
-          date:'2026-04-20',
-          time:'10:30',
-          notes:'أعراض حرارة وإرهاق'
-        },
-        {
-          name:'نواف خالد',
-          id:'10044',
-          city:'جدة',
-          facility:'مركز صحي النخيل',
-          dept:'أسنان',
-          type:'مراجعة',
-          date:'2026-04-22',
-          time:'13:15',
-          notes:'مراجعة علاج سابق'
-        }
-      ];
-      setData(KEYS.appointments, current.concat(sample));
-    }
-
-    document.getElementById('appointmentForm').addEventListener('submit', e => {
+    document.getElementById('appointmentForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      const data = getData(KEYS.appointments);
+      const data = getStored(storageKeys.appointments);
       data.push({
-        name: apptName.value.trim(),
-        id: apptId.value.trim(),
-        city: apptCity.value,
-        facility: apptFacility.value,
-        dept: apptDept.value,
-        type: apptType.value,
-        date: apptDate.value,
-        time: apptTime.value,
-        notes: apptNotes.value.trim()
+        name: document.getElementById('apptName').value.trim(),
+        identity: document.getElementById('apptId').value.trim(),
+        facility: document.getElementById('apptFacility').value,
+        department: document.getElementById('apptDept').value,
+        date: document.getElementById('apptDate').value,
+        time: document.getElementById('apptTime').value,
+        notes: document.getElementById('apptNotes').value.trim()
       });
-      setData(KEYS.appointments, data);
+      setStored(storageKeys.appointments, data);
       e.target.reset();
-      showSection('my-appointments');
-      alert('تم تسجيل الموعد بنجاح');
+      renderAppointments();
+      openHealthTab('health-my-appointments');
+      alert('تم حجز الموعد بنجاح');
     });
 
-    document.getElementById('recordForm').addEventListener('submit', e => {
+    document.getElementById('leaveForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      const data = getData(KEYS.records);
-      data.push({
-        name: recordName.value.trim(),
-        id: recordId.value.trim(),
-        blood: recordBlood.value,
-        allergy: recordAllergy.value.trim(),
-        history: recordHistory.value.trim()
-      });
-      setData(KEYS.records, data);
-      e.target.reset();
-      alert('تم حفظ السجل الطبي');
-    });
+      if(!state.employeeLoggedIn){
+        openAuth();
+        return;
+      }
 
-    document.getElementById('leaveForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const data = getData(KEYS.leaves);
+      const data = getStored(storageKeys.leaves);
       data.push({
-        name: leaveName.value.trim(),
-        employer: leaveEmployer.value.trim(),
-        start: leaveStart.value,
-        end: leaveEnd.value,
-        reason: leaveReason.value.trim()
+        patient: document.getElementById('leavePatient').value.trim(),
+        identity: document.getElementById('leaveIdentity').value.trim(),
+        from: document.getElementById('leaveFrom').value,
+        to: document.getElementById('leaveTo').value,
+        reason: document.getElementById('leaveReason').value.trim(),
+        employee: state.employee.name
       });
-      setData(KEYS.leaves, data);
+      setStored(storageKeys.leaves, data);
       e.target.reset();
+      renderLeaves();
       alert('تم إصدار الإجازة المرضية');
     });
 
-    document.getElementById('reportForm').addEventListener('submit', e => {
+    document.getElementById('reportForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      const data = getData(KEYS.reports);
+      if(!state.employeeLoggedIn){
+        openAuth();
+        return;
+      }
+
+      const data = getStored(storageKeys.reports);
       data.push({
-        name: reportName.value.trim(),
-        type: reportType.value,
-        details: reportDetails.value.trim(),
-        createdAt: new Date().toLocaleString('ar-SA')
+        patient: document.getElementById('reportPatient').value.trim(),
+        type: document.getElementById('reportType').value,
+        details: document.getElementById('reportDetails').value.trim(),
+        employee: state.employee.name
       });
-      setData(KEYS.reports, data);
+      setStored(storageKeys.reports, data);
       e.target.reset();
-      alert('تم حفظ التقرير الطبي');
-    });
-
-    document.getElementById('vaccineForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const data = getData(KEYS.vaccines);
-      data.push({
-        name: vacName.value.trim(),
-        vaccine: vacNameField.value,
-        dose: vacDose.value,
-        date: vacDate.value
-      });
-      setData(KEYS.vaccines, data);
-      e.target.reset();
-      alert('تم تسجيل التطعيم');
-    });
-
-    document.getElementById('ambulanceForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const data = getData(KEYS.ambulance);
-      data.push({
-        name: ambName.value.trim(),
-        location: ambLocation.value.trim(),
-        type: ambType.value,
-        level: ambLevel.value,
-        desc: ambDesc.value.trim(),
-        createdAt: new Date().toLocaleString('ar-SA')
-      });
-      setData(KEYS.ambulance, data);
-      e.target.reset();
-      alert('تم إرسال بلاغ الإسعاف');
-    });
-
-    document.getElementById('employeeForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const result = document.getElementById('employeeLoginResult');
-      result.innerHTML = `تم تسجيل الدخول بنجاح كموظف في قسم <strong>${empDepartment.value}</strong> بالرقم الوظيفي <strong>${empId.value}</strong>`;
-      alert('تم تسجيل الدخول بنجاح');
-    });
-
-    function refreshAll(){
-      refreshStats();
-      renderAppointments();
-      renderRecords();
-      renderLeaves();
       renderReports();
-      renderVaccines();
-      renderAmbulance();
-    }
+      alert('تم حفظ تقرير المريض');
+    });
 
-    refreshAll();
+    renderAppointments();
+    renderLeaves();
+    renderReports();
+    updateEmployeeUI();
   </script>
 </body>
 </html>
