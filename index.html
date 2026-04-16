@@ -1,1159 +1,1303 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>هيئة KR الرقمية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2d68c4;
-            --primary-dark: #1e3a8a;
-            --primary-light: #60a5fa;
-            --secondary: #00a86b;
-            --accent: #ff6b6b;
-            --gold: #ffd700;
-            --gold-2: #ffcc00;
-            --gold-3: #fff1a8;
-            --dark: #08111f;
-            --darker: #0f172a;
-            --card: rgba(15, 23, 42, 0.72);
-            --light: #f8fafc;
-            --gradient: linear-gradient(135deg, #2d68c4 0%, #1e3a8a 45%, #08111f 100%);
-            --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ffed4e 45%, #fff7b2 100%);
-            --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-            --glow-blue: 0 0 35px rgba(45, 104, 196, 0.35);
-            --glow-gold: 0 0 35px rgba(255, 215, 0, 0.28);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background:
-                radial-gradient(circle at top right, rgba(45, 104, 196, 0.14), transparent 25%),
-                radial-gradient(circle at bottom left, rgba(255, 215, 0, 0.08), transparent 25%),
-                linear-gradient(180deg, #07101d 0%, #0b1423 55%, #08111f 100%);
-            color: var(--light);
-            overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-        }
-
-        .grid-bg {
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 48px 48px;
-            transform: perspective(700px) rotateX(68deg);
-            transform-origin: center top;
-            animation: gridMove 28s linear infinite;
-            z-index: 1;
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .particles-container {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: floatParticle linear infinite;
-            opacity: 0.2;
-            filter: blur(1px);
-        }
-
-        .orb {
-            position: fixed;
-            width: 380px;
-            height: 380px;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.18;
-            pointer-events: none;
-            z-index: 1;
-            animation: orbMove 12s ease-in-out infinite alternate;
-        }
-
-        .orb-1 {
-            top: -80px;
-            right: -100px;
-            background: #2d68c4;
-        }
-
-        .orb-2 {
-            bottom: 80px;
-            left: -120px;
-            background: #ffd700;
-            animation-delay: 2s;
-        }
-
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 16px 20px;
-            background: rgba(8, 17, 31, 0.72);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.35s ease, background 0.35s ease, border-color 0.35s ease;
-            animation: slideDown 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .header.scrolled {
-            background: rgba(8, 17, 31, 0.88);
-            border-bottom-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .header-content {
-            max-width: 1350px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-        }
-
-        .logo-icon {
-            width: 58px;
-            height: 58px;
-            border-radius: 18px;
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8, #0f172a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--glow-blue), inset 0 1px 0 rgba(255,255,255,0.2);
-            position: relative;
-            animation: logoFloat 5s ease-in-out infinite;
-            overflow: hidden;
-        }
-
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: conic-gradient(from 180deg, rgba(255,255,255,0.2), transparent, rgba(255,255,255,0.15), transparent);
-            animation: rotate360 6s linear infinite;
-        }
-
-        .logo-icon::after {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
-        }
-
-        .logo-icon i {
-            position: relative;
-            z-index: 2;
-            font-size: 25px;
-            color: white;
-        }
-
-        .logo-text h1 {
-            font-size: 26px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            background: linear-gradient(135deg, #ffffff, #a7d0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .logo-text p {
-            font-size: 12px;
-            color: rgba(255,255,255,0.68);
-            letter-spacing: 2.2px;
-        }
-
-        .notification {
-            width: 50px;
-            height: 50px;
-            border: none;
-            outline: none;
-            border-radius: 16px;
-            background: rgba(255,255,255,0.05);
-            color: var(--primary-light);
-            cursor: pointer;
-            position: relative;
-            transition: 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-        }
-
-        .notification:hover {
-            transform: translateY(-3px);
-            color: white;
-            box-shadow: var(--glow-blue);
-            background: rgba(255,255,255,0.09);
-        }
-
-        .notification i {
-            font-size: 22px;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: -7px;
-            right: -6px;
-            min-width: 22px;
-            height: 22px;
-            padding: 0 6px;
-            border-radius: 999px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #ff6b6b, #ff3b3b);
-            color: white;
-            font-size: 10px;
-            font-weight: 800;
-            box-shadow: 0 0 14px rgba(255, 80, 80, 0.5);
-            animation: badgePulse 2s infinite;
-        }
-
-        .main {
-            position: relative;
-            z-index: 2;
-            padding-bottom: 140px;
-        }
-
-        .hero-wrap {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 115px 20px 40px;
-        }
-
-        .banner {
-            position: relative;
-            overflow: hidden;
-            min-height: calc(100vh - 210px);
-            border-radius: 34px;
-            padding: 70px 45px 60px;
-            background:
-                linear-gradient(145deg, rgba(45, 104, 196, 0.18), rgba(255,255,255,0.03)),
-                rgba(10, 18, 33, 0.82);
-            border: 1px solid rgba(255,255,255,0.08);
-            box-shadow: var(--shadow), var(--glow-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            animation: bannerAppear 1.05s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            isolation: isolate;
-        }
-
-        .banner::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10), transparent 20%),
-                radial-gradient(circle at 80% 30%, rgba(96,165,250,0.18), transparent 22%),
-                radial-gradient(circle at 50% 80%, rgba(255,215,0,0.10), transparent 25%);
-            z-index: 0;
-            animation: pulseBg 8s ease-in-out infinite;
-        }
-
-        .banner::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.08) 50%, transparent 80%);
-            transform: translateX(-120%);
-            animation: shine 5s linear infinite;
-            z-index: 1;
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 2;
-            max-width: 820px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 18px;
-            border-radius: 999px;
-            margin-bottom: 24px;
-            background: rgba(255,255,255,0.06);
-            border: 1px solid rgba(255,255,255,0.09);
-            color: rgba(255,255,255,0.9);
-            font-size: 14px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-            animation: fadeUp 1s ease both;
-        }
-
-        .hero-badge i {
-            color: var(--gold);
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
-        }
-
-        .banner-icon-wrap {
-            position: relative;
-            width: 145px;
-            height: 145px;
-            margin: 0 auto 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: iconFloat 5s ease-in-out infinite;
-        }
-
-        .banner-icon-ring,
-        .banner-icon-ring2 {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.12);
-        }
-
-        .banner-icon-ring {
-            width: 145px;
-            height: 145px;
-            animation: rotate360 14s linear infinite;
-        }
-
-        .banner-icon-ring2 {
-            width: 110px;
-            height: 110px;
-            border-style: dashed;
-            animation: rotate360Reverse 10s linear infinite;
-        }
-
-        .banner-icon {
-            width: 92px;
-            height: 92px;
-            border-radius: 28px;
-            background: linear-gradient(135deg, #2d68c4, #1e3a8a, #0f172a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--glow-blue), inset 0 1px 0 rgba(255,255,255,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .banner-icon::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 60%);
-        }
-
-        .banner-icon i {
-            font-size: 42px;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-
-        .banner h2 {
-            font-size: clamp(32px, 5vw, 56px);
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 18px;
-            background: linear-gradient(135deg, #ffffff 0%, #d7eaff 45%, #ffd700 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            animation: fadeUp 1s 0.12s ease both;
-        }
-
-        .banner p {
-            font-size: 18px;
-            line-height: 1.9;
-            color: rgba(255,255,255,0.84);
-            max-width: 700px;
-            margin: 0 auto 36px;
-            animation: fadeUp 1s 0.22s ease both;
-        }
-
-        .banner-actions {
-            display: flex;
-            gap: 18px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeUp 1s 0.35s ease both;
-        }
-
-        .banner-btn {
-            position: relative;
-            border: none;
-            border-radius: 999px;
-            cursor: pointer;
-            font-weight: 900;
-            font-size: 18px;
-            padding: 18px 34px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            overflow: hidden;
-            transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
-            min-width: 235px;
-        }
-
-        .banner-btn i {
-            transition: transform 0.35s ease;
-        }
-
-        .banner-btn:hover i {
-            transform: translateX(-3px) scale(1.08);
-        }
-
-        .banner-btn-primary {
-            color: #07101d;
-            background: linear-gradient(135deg, #ffd700, #ffed4e 45%, #fff5a6 100%);
-            box-shadow:
-                0 16px 40px rgba(255, 215, 0, 0.22),
-                0 0 26px rgba(255, 215, 0, 0.16),
-                inset 0 1px 0 rgba(255,255,255,0.55);
-            animation: goldenPulse 2.4s infinite;
-        }
-
-        .banner-btn-primary::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.55) 50%, transparent 80%);
-            transform: translateX(-130%);
-            animation: goldShine 2.8s infinite;
-        }
-
-        .banner-btn-primary:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow:
-                0 22px 50px rgba(255, 215, 0, 0.32),
-                0 0 38px rgba(255, 215, 0, 0.22),
-                inset 0 1px 0 rgba(255,255,255,0.6);
-            filter: brightness(1.03);
-            animation-play-state: paused;
-        }
-
-        .banner-btn-secondary {
-            background: rgba(255,255,255,0.05);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.10);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
-        }
-
-        .banner-btn-secondary:hover {
-            transform: translateY(-6px) scale(1.02);
-            background: rgba(255,255,255,0.08);
-            box-shadow: var(--glow-blue);
-        }
-
-        .mini-stats {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            animation: fadeUp 1s 0.5s ease both;
-        }
-
-        .stat-chip {
-            min-width: 170px;
-            padding: 16px 18px;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.08);
-            backdrop-filter: blur(12px);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-        }
-
-        .stat-chip strong {
-            display: block;
-            font-size: 22px;
-            color: white;
-            margin-bottom: 5px;
-        }
-
-        .stat-chip span {
-            font-size: 13px;
-            color: rgba(255,255,255,0.65);
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 16px 18px 20px;
-            background: linear-gradient(to top, rgba(8,17,31,0.95), rgba(8,17,31,0.72));
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border-top: 1px solid rgba(255,255,255,0.08);
-            animation: slideUp 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .nav-container {
-            max-width: 540px;
-            margin: 0 auto;
-        }
-
-        .admin-nav-btn {
-            width: 100%;
-            border: 1px solid rgba(255,255,255,0.12);
-            background:
-                linear-gradient(135deg, rgba(45,104,196,0.22), rgba(255,255,255,0.05)),
-                rgba(15, 23, 42, 0.82);
-            color: white;
-            border-radius: 24px;
-            padding: 18px 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: 800;
-            transition: 0.35s ease;
-            box-shadow: var(--shadow), var(--glow-blue);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .admin-nav-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(110deg, transparent 20%, rgba(255,255,255,0.12) 50%, transparent 80%);
-            transform: translateX(-120%);
-            transition: transform 0.8s ease;
-        }
-
-        .admin-nav-btn:hover::before {
-            transform: translateX(120%);
-        }
-
-        .admin-nav-btn:hover {
-            transform: translateY(-5px) scale(1.01);
-            border-color: rgba(255,255,255,0.18);
-            background:
-                linear-gradient(135deg, rgba(45,104,196,0.30), rgba(255,255,255,0.07)),
-                rgba(15, 23, 42, 0.9);
-        }
-
-        .admin-nav-btn .admin-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #2d68c4, #1e3a8a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--glow-blue);
-            flex-shrink: 0;
-        }
-
-        .admin-nav-btn .admin-icon i {
-            font-size: 22px;
-        }
-
-        .admin-nav-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: right;
-            flex: 1;
-        }
-
-        .admin-nav-text strong {
-            font-size: 18px;
-            color: white;
-        }
-
-        .admin-nav-text span {
-            font-size: 12px;
-            color: rgba(255,255,255,0.68);
-            margin-top: 2px;
-        }
-
-        .admin-arrow {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        @keyframes floatParticle {
-            0% {
-                transform: translateY(0) translateX(0) scale(1);
-            }
-            50% {
-                transform: translateY(-60px) translateX(18px) scale(1.08);
-            }
-            100% {
-                transform: translateY(-120px) translateX(-10px) scale(0.95);
-            }
-        }
-
-        @keyframes gridMove {
-            0% {
-                transform: perspective(700px) rotateX(68deg) translateY(0);
-            }
-            100% {
-                transform: perspective(700px) rotateX(68deg) translateY(48px);
-            }
-        }
-
-        @keyframes orbMove {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, -25px) scale(1.12); }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(100%);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bannerAppear {
-            from {
-                opacity: 0;
-                transform: translateY(40px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        @keyframes pulseBg {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.03); opacity: 0.92; }
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-120%); }
-            100% { transform: translateX(120%); }
-        }
-
-        @keyframes goldShine {
-            0% { transform: translateX(-140%); }
-            100% { transform: translateX(140%); }
-        }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        @keyframes iconFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 14px rgba(255, 80, 80, 0.5); }
-            50% { transform: scale(1.12); box-shadow: 0 0 24px rgba(255, 80, 80, 0.75); }
-        }
-
-        @keyframes goldenPulse {
-            0%, 100% {
-                box-shadow:
-                    0 16px 40px rgba(255, 215, 0, 0.22),
-                    0 0 26px rgba(255, 215, 0, 0.16),
-                    inset 0 1px 0 rgba(255,255,255,0.55);
-            }
-            50% {
-                box-shadow:
-                    0 22px 54px rgba(255, 215, 0, 0.30),
-                    0 0 36px rgba(255, 215, 0, 0.22),
-                    inset 0 1px 0 rgba(255,255,255,0.60);
-            }
-        }
-
-        @keyframes rotate360 {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes rotate360Reverse {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
-        }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(24px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes popup {
-            0% {
-                transform: translate(-50%, -50%) scale(0.78);
-                opacity: 0;
-            }
-            70% {
-                transform: translate(-50%, -50%) scale(1.04);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(120%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 900px) {
-            .hero-wrap {
-                padding-top: 105px;
-            }
-
-            .banner {
-                min-height: auto;
-                padding: 60px 24px 50px;
-                border-radius: 28px;
-            }
-
-            .banner h2 {
-                font-size: 38px;
-            }
-
-            .banner p {
-                font-size: 16px;
-            }
-
-            .banner-btn {
-                min-width: 100%;
-            }
-
-            .banner-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .admin-nav-text strong {
-                font-size: 16px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .header {
-                padding: 14px 14px;
-            }
-
-            .header-content {
-                gap: 12px;
-            }
-
-            .logo-icon {
-                width: 50px;
-                height: 50px;
-                border-radius: 16px;
-            }
-
-            .logo-icon i {
-                font-size: 22px;
-            }
-
-            .logo-text h1 {
-                font-size: 21px;
-            }
-
-            .logo-text p {
-                font-size: 10px;
-                letter-spacing: 1.5px;
-            }
-
-            .notification {
-                width: 46px;
-                height: 46px;
-                border-radius: 14px;
-            }
-
-            .hero-wrap {
-                padding: 100px 14px 30px;
-            }
-
-            .banner {
-                padding: 40px 18px 38px;
-                border-radius: 24px;
-            }
-
-            .banner-icon-wrap {
-                width: 118px;
-                height: 118px;
-                margin-bottom: 24px;
-            }
-
-            .banner-icon-ring {
-                width: 118px;
-                height: 118px;
-            }
-
-            .banner-icon-ring2 {
-                width: 88px;
-                height: 88px;
-            }
-
-            .banner-icon {
-                width: 76px;
-                height: 76px;
-                border-radius: 22px;
-            }
-
-            .banner-icon i {
-                font-size: 34px;
-            }
-
-            .banner h2 {
-                font-size: 30px;
-            }
-
-            .banner p {
-                font-size: 15px;
-                line-height: 1.8;
-            }
-
-            .banner-btn {
-                font-size: 16px;
-                padding: 16px 22px;
-            }
-
-            .mini-stats {
-                gap: 12px;
-            }
-
-            .stat-chip {
-                min-width: calc(50% - 8px);
-                padding: 14px 14px;
-            }
-
-            .stat-chip strong {
-                font-size: 18px;
-            }
-
-            .bottom-nav {
-                padding: 12px 12px 16px;
-            }
-
-            .admin-nav-btn {
-                padding: 16px 16px;
-                border-radius: 22px;
-                gap: 12px;
-            }
-
-            .admin-nav-btn .admin-icon {
-                width: 44px;
-                height: 44px;
-                border-radius: 14px;
-            }
-
-            .admin-nav-text span {
-                font-size: 11px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة سمو | وزارة الصحة</title>
+  <style>
+    :root{
+      --bg:#f5f8fc;
+      --surface:#ffffff;
+      --surface-2:#f0f4fa;
+      --text:#0f172a;
+      --muted:#64748b;
+      --primary:#0f766e;
+      --primary-dark:#0b5d57;
+      --accent:#14b8a6;
+      --border:#dbe4f0;
+      --danger:#dc2626;
+      --warning:#d97706;
+      --shadow:0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Tahoma, Arial, sans-serif;
+      background:linear-gradient(180deg,#eef4fb 0%, #f8fbff 100%);
+      color:var(--text);
+    }
+
+    .topbar{
+      background:linear-gradient(90deg, #0f766e 0%, #0b5d57 100%);
+      color:#fff;
+      padding:14px 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      box-shadow:0 8px 24px rgba(0,0,0,.12);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      font-weight:700;
+      font-size:22px;
+    }
+
+    .brand-badge{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:rgba(255,255,255,.16);
+      display:grid;
+      place-items:center;
+      font-size:22px;
+      border:1px solid rgba(255,255,255,.2);
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .ghost-note{
+      font-size:13px;
+      opacity:.95;
+      background:rgba(255,255,255,.12);
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:280px 1fr;
+      min-height:calc(100vh - 72px);
+    }
+
+    .sidebar{
+      background:#0f172a;
+      color:#fff;
+      padding:22px 16px;
+      position:sticky;
+      top:72px;
+      height:calc(100vh - 72px);
+      overflow:auto;
+    }
+
+    .sidebar h3{
+      margin:6px 10px 14px;
+      font-size:14px;
+      color:#cbd5e1;
+      font-weight:600;
+    }
+
+    .nav-btn{
+      width:100%;
+      border:none;
+      text-align:right;
+      padding:14px 16px;
+      border-radius:14px;
+      margin-bottom:8px;
+      background:transparent;
+      color:#e2e8f0;
+      cursor:pointer;
+      font-size:15px;
+      transition:.2s ease;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active{
+      background:rgba(20,184,166,.16);
+      color:#fff;
+    }
+
+    .content{
+      padding:28px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, #0f766e 0%, #0ea5a0 100%);
+      color:#fff;
+      border-radius:28px;
+      padding:32px;
+      box-shadow:var(--shadow);
+      display:grid;
+      grid-template-columns:1.5fr 1fr;
+      gap:24px;
+      align-items:center;
+      margin-bottom:22px;
+    }
+
+    .hero h1{
+      margin:0 0 12px;
+      font-size:34px;
+      line-height:1.4;
+    }
+
+    .hero p{
+      margin:0 0 16px;
+      color:rgba(255,255,255,.92);
+      line-height:1.9;
+      font-size:15px;
+    }
+
+    .hero-card{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:22px;
+      padding:18px;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-card div{
+      margin-bottom:10px;
+      font-size:14px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:18px;
+    }
+
+    .card{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:20px;
+    }
+
+    .span-12{grid-column:span 12}
+    .span-8{grid-column:span 8}
+    .span-6{grid-column:span 6}
+    .span-4{grid-column:span 4}
+    .span-3{grid-column:span 3}
+
+    .section{
+      display:none;
+      animation:fade .25s ease;
+    }
+
+    .section.active{display:block}
+
+    @keyframes fade{
+      from{opacity:0;transform:translateY(8px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .title-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:14px;
+      flex-wrap:wrap;
+    }
+
+    .title-row h2{
+      margin:0;
+      font-size:24px;
+    }
+
+    .muted{color:var(--muted); font-size:14px}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat{
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .stat h4{
+      margin:0 0 8px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:600;
+    }
+
+    .stat .num{
+      font-size:30px;
+      font-weight:700;
+      color:#0f172a;
+    }
+
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .item{
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .item strong{display:block;margin-bottom:6px}
+
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+      margin-left:6px;
+    }
+
+    .badge.success{background:#dcfce7;color:#166534}
+    .badge.pending{background:#fef3c7;color:#92400e}
+    .badge.info{background:#dbeafe;color:#1d4ed8}
+    .badge.danger{background:#fee2e2;color:#991b1b}
+
+    form{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:14px;
+      margin-top:12px;
+    }
+
+    .field{
+      grid-column:span 6;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field.full{grid-column:span 12}
+    .field.third{grid-column:span 4}
+
+    label{
+      font-size:14px;
+      font-weight:700;
+      color:#1e293b;
+    }
+
+    input, select, textarea{
+      width:100%;
+      padding:13px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:#fff;
+      outline:none;
+      font-family:inherit;
+      font-size:14px;
+      transition:.15s ease;
+    }
+
+    textarea{min-height:110px; resize:vertical}
+
+    input:focus, select:focus, textarea:focus{
+      border-color:#5eead4;
+      box-shadow:0 0 0 4px rgba(20,184,166,.12);
+    }
+
+    .btn{
+      border:none;
+      border-radius:14px;
+      padding:13px 18px;
+      cursor:pointer;
+      font-weight:700;
+      font-family:inherit;
+      font-size:14px;
+      transition:.2s ease;
+    }
+
+    .btn-primary{
+      background:var(--primary);
+      color:#fff;
+    }
+    .btn-primary:hover{background:var(--primary-dark)}
+
+    .btn-light{
+      background:#e2e8f0;
+      color:#0f172a;
+    }
+
+    .btn-danger{
+      background:var(--danger);
+      color:#fff;
+    }
+
+    .btn-warning{
+      background:var(--warning);
+      color:#fff;
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:10px;
+      overflow:hidden;
+    }
+
+    th, td{
+      padding:14px 12px;
+      border-bottom:1px solid var(--border);
+      text-align:right;
+      font-size:14px;
+      vertical-align:top;
+    }
+
+    th{
+      color:var(--muted);
+      font-weight:700;
+      background:#f8fafc;
+    }
+
+    .note-box{
+      background:#ecfeff;
+      border:1px solid #bae6fd;
+      border-radius:16px;
+      padding:16px;
+      color:#0f172a;
+      line-height:1.9;
+      font-size:14px;
+    }
+
+    .login-box{
+      max-width:520px;
+      margin:0 auto;
+    }
+
+    .login-header{
+      text-align:center;
+      margin-bottom:16px;
+    }
+
+    .login-header h2{
+      margin:0 0 8px;
+      font-size:28px;
+    }
+
+    .footer-note{
+      margin-top:18px;
+      font-size:12px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .quick-links{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:14px;
+    }
+
+    .quick-link{
+      padding:18px;
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:18px;
+      cursor:pointer;
+      transition:.2s ease;
+      text-align:right;
+    }
+    .quick-link:hover{transform:translateY(-2px)}
+
+    .empty{
+      text-align:center;
+      color:var(--muted);
+      padding:18px;
+      background:#f8fafc;
+      border:1px dashed var(--border);
+      border-radius:14px;
+      margin-top:12px;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    @media (max-width: 1100px){
+      .layout{grid-template-columns:1fr}
+      .sidebar{
+        position:relative;
+        top:0;
+        height:auto;
+      }
+      .hero{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .quick-links{grid-template-columns:1fr 1fr}
+    }
+
+    @media (max-width: 700px){
+      .content{padding:16px}
+      .stats{grid-template-columns:1fr}
+      .field,.field.third{grid-column:span 12}
+      .quick-links{grid-template-columns:1fr}
+      .split{grid-template-columns:1fr}
+      .topbar{padding:12px 14px}
+      .brand{font-size:18px}
+      .hero h1{font-size:26px}
+    }
+  </style>
 </head>
 <body>
-    <div class="grid-bg"></div>
-    <div class="particles-container" id="particles"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
 
-    <header class="header" id="mainHeader">
-        <div class="header-content">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-id-card"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>هيئة KR الرقمية</h1>
-                    <p>تميز في كل تفاصيلنا</p>
-                </div>
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-badge">🏥</div>
+      <div>منصة سمو | وزارة الصحة</div>
+    </div>
+    <div class="top-actions">
+      <div class="ghost-note">نسخة لعب RP وليست جهة حكومية حقيقية</div>
+      <button class="btn btn-light" onclick="showSection('employee-login')">دخول الموظفين</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <h3>الخدمات الصحية</h3>
+      <button class="nav-btn active" onclick="showSection('dashboard', this)">الرئيسية الصحية</button>
+      <button class="nav-btn" onclick="showSection('appointments', this)">حجز موعد</button>
+      <button class="nav-btn" onclick="showSection('my-appointments', this)">مواعيدي</button>
+      <button class="nav-btn" onclick="showSection('medical-record', this)">السجل الطبي</button>
+      <button class="nav-btn" onclick="showSection('sick-leave', this)">الإجازات المرضية</button>
+      <button class="nav-btn" onclick="showSection('reports', this)">التقارير الطبية</button>
+      <button class="nav-btn" onclick="showSection('vaccines', this)">التطعيمات</button>
+      <button class="nav-btn" onclick="showSection('ambulance', this)">طلب إسعاف</button>
+      <button class="nav-btn" onclick="showSection('employee-login', this)">بوابة الموظفين</button>
+    </aside>
+
+    <main class="content">
+
+      <section id="dashboard" class="section active">
+        <div class="hero">
+          <div>
+            <h1>مرحبًا بك في خدمات وزارة الصحة ضمن منصة سمو</h1>
+            <p>
+              بوابة صحية رقمية للعبة فقط، تتيح للمواطنين والموظفين إدارة المواعيد، عرض التقارير الطبية،
+              إصدار الإجازات المرضية، متابعة التطعيمات، وتقديم طلبات الإسعاف بشكل مرتب وسريع.
+            </p>
+            <div class="toolbar">
+              <button class="btn btn-light" onclick="showSection('appointments')">احجز موعد الآن</button>
+              <button class="btn btn-light" onclick="showSection('ambulance')">طلب إسعاف</button>
             </div>
-
-            <button class="notification" type="button" aria-label="الإشعارات">
-                <i class="fas fa-bell"></i>
-                <span class="notification-badge" id="notificationBadge">0</span>
-            </button>
+          </div>
+          <div class="hero-card">
+            <div><strong>الجهة:</strong> وزارة الصحة</div>
+            <div><strong>نوع المنصة:</strong> خدمات RP داخل اللعبة</div>
+            <div><strong>الحالة:</strong> <span class="badge success">متاحة الآن</span></div>
+            <div><strong>الخدمات النشطة:</strong> مواعيد، تقارير، تطعيمات، سجلات، إسعاف</div>
+          </div>
         </div>
-    </header>
 
-    <main class="main">
-        <div class="hero-wrap">
-            <section class="banner">
-                <div class="banner-content">
-                    <div class="hero-badge">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>نظام رسمي متطور وآمن لتفعيل الهوية الرقمية</span>
-                    </div>
-
-                    <div class="banner-icon-wrap">
-                        <div class="banner-icon-ring"></div>
-                        <div class="banner-icon-ring2"></div>
-                        <div class="banner-icon">
-                            <i class="fas fa-id-card-alt"></i>
-                        </div>
-                    </div>
-
-                    <h2>نظام تفعيل الهوية المتقدم</h2>
-                    <p>
-                        تجربة رقمية فاخرة لتقديم طلبات التفعيل بسرعة وأناقة وأمان.
-                        تم تطوير الواجهة لتكون أكثر احترافية، سلاسة، وجاذبية بصرياً
-                        مع إحساس حديث يليق بهوية هيئة KR الرقمية.
-                    </p>
-
-                    <div class="banner-actions">
-                        <button class="banner-btn banner-btn-primary" onclick="navigateTo('apply.html')">
-                            <i class="fas fa-bolt"></i>
-                            بدء طلب التفعيل
-                        </button>
-
-                        <button class="banner-btn banner-btn-secondary" onclick="navigateToAdmin()">
-                            <i class="fas fa-user-shield"></i>
-                            الدخول للنظام الإداري
-                        </button>
-                    </div>
-
-                    <div class="mini-stats">
-                        <div class="stat-chip">
-                            <strong>أمان عالي</strong>
-                            <span>حماية متقدمة للطلبات والبيانات</span>
-                        </div>
-                        <div class="stat-chip">
-                            <strong>واجهة فاخرة</strong>
-                            <span>تصميم حديث وسريع الاستجابة</span>
-                        </div>
-                        <div class="stat-chip">
-                            <strong>إدارة مرنة</strong>
-                            <span>وصول مباشر للنظام الإداري</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <div class="stats">
+          <div class="stat">
+            <h4>المواعيد المسجلة</h4>
+            <div class="num" id="statAppointments">0</div>
+          </div>
+          <div class="stat">
+            <h4>الإجازات المرضية</h4>
+            <div class="num" id="statLeaves">0</div>
+          </div>
+          <div class="stat">
+            <h4>التقارير الطبية</h4>
+            <div class="num" id="statReports">0</div>
+          </div>
+          <div class="stat">
+            <h4>طلبات الإسعاف</h4>
+            <div class="num" id="statAmbulance">0</div>
+          </div>
         </div>
+
+        <div class="grid">
+          <div class="card span-8">
+            <div class="title-row">
+              <h2>الوصول السريع</h2>
+              <span class="muted">ابدأ بأهم الخدمات مباشرة</span>
+            </div>
+            <div class="quick-links">
+              <div class="quick-link" onclick="showSection('appointments')">
+                <strong>📅 حجز موعد</strong>
+                <div class="muted">حجز زيارة لمستشفى أو مركز صحي</div>
+              </div>
+              <div class="quick-link" onclick="showSection('reports')">
+                <strong>🩺 التقارير الطبية</strong>
+                <div class="muted">إصدار ورفع التقارير الصحية</div>
+              </div>
+              <div class="quick-link" onclick="showSection('sick-leave')">
+                <strong>📝 الإجازات المرضية</strong>
+                <div class="muted">تقديم طلب إجازة مرضية</div>
+              </div>
+              <div class="quick-link" onclick="showSection('vaccines')">
+                <strong>💉 التطعيمات</strong>
+                <div class="muted">عرض وتحديث الجرعات المسجلة</div>
+              </div>
+              <div class="quick-link" onclick="showSection('medical-record')">
+                <strong>📂 السجل الطبي</strong>
+                <div class="muted">عرض الملفات والتاريخ الصحي</div>
+              </div>
+              <div class="quick-link" onclick="showSection('ambulance')">
+                <strong>🚑 طلب إسعاف</strong>
+                <div class="muted">إرسال بلاغ إسعافي سريع</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card span-4">
+            <div class="title-row">
+              <h2>تنبيه</h2>
+            </div>
+            <div class="note-box">
+              هذه الواجهة مخصصة للعبة فقط. جميع البيانات تجريبية ويتم حفظها محليًا داخل المتصفح لعرض النظام بشكل واقعي.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="appointments" class="section">
+        <div class="card">
+          <div class="title-row">
+            <h2>حجز موعد صحي</h2>
+            <span class="muted">املأ البيانات لتسجيل موعد جديد</span>
+          </div>
+          <form id="appointmentForm">
+            <div class="field">
+              <label>الاسم الكامل</label>
+              <input type="text" id="apptName" required placeholder="مثال: محمد خالد" />
+            </div>
+            <div class="field">
+              <label>رقم الهوية / رقم اللاعب</label>
+              <input type="text" id="apptId" required placeholder="مثال: 10482" />
+            </div>
+            <div class="field">
+              <label>المدينة / المنطقة</label>
+              <select id="apptCity" required>
+                <option value="">اختر المنطقة</option>
+                <option>الرياض</option>
+                <option>جدة</option>
+                <option>الدمام</option>
+                <option>مكة المكرمة</option>
+                <option>المدينة المنورة</option>
+                <option>أبها</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>المنشأة الصحية</label>
+              <select id="apptFacility" required>
+                <option value="">اختر المنشأة</option>
+                <option>مستشفى الملك فهد</option>
+                <option>مدينة الملك سعود الطبية</option>
+                <option>مركز صحي النخيل</option>
+                <option>مستشفى الحرس</option>
+                <option>مركز الرعاية الشامل</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>التخصص</label>
+              <select id="apptDept" required>
+                <option value="">اختر التخصص</option>
+                <option>طب عام</option>
+                <option>طوارئ</option>
+                <option>أسنان</option>
+                <option>جلدية</option>
+                <option>قلب</option>
+                <option>عظام</option>
+                <option>عيون</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>نوع الزيارة</label>
+              <select id="apptType" required>
+                <option value="">اختر نوع الزيارة</option>
+                <option>زيارة جديدة</option>
+                <option>مراجعة</option>
+                <option>استشارة</option>
+                <option>حالة عاجلة</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>التاريخ</label>
+              <input type="date" id="apptDate" required />
+            </div>
+            <div class="field">
+              <label>الوقت</label>
+              <input type="time" id="apptTime" required />
+            </div>
+            <div class="field full">
+              <label>ملاحظات إضافية</label>
+              <textarea id="apptNotes" placeholder="اكتب وصفًا مختصرًا للحالة أو سبب الموعد"></textarea>
+            </div>
+            <div class="field full">
+              <div class="toolbar">
+                <button type="submit" class="btn btn-primary">تأكيد الحجز</button>
+                <button type="reset" class="btn btn-light">إعادة تعيين</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="my-appointments" class="section">
+        <div class="card">
+          <div class="title-row">
+            <h2>مواعيدي</h2>
+            <div class="toolbar">
+              <button class="btn btn-light" onclick="seedAppointments()">إضافة بيانات تجريبية</button>
+              <button class="btn btn-danger" onclick="clearAppointments()">حذف الكل</button>
+            </div>
+          </div>
+          <div id="appointmentsTableWrap"></div>
+        </div>
+      </section>
+
+      <section id="medical-record" class="section">
+        <div class="grid">
+          <div class="card span-6">
+            <div class="title-row">
+              <h2>إضافة سجل طبي</h2>
+            </div>
+            <form id="recordForm">
+              <div class="field">
+                <label>اسم المريض</label>
+                <input type="text" id="recordName" required />
+              </div>
+              <div class="field">
+                <label>رقم الهوية / رقم اللاعب</label>
+                <input type="text" id="recordId" required />
+              </div>
+              <div class="field">
+                <label>الفصيلة</label>
+                <select id="recordBlood" required>
+                  <option value="">اختر الفصيلة</option>
+                  <option>O+</option>
+                  <option>O-</option>
+                  <option>A+</option>
+                  <option>A-</option>
+                  <option>B+</option>
+                  <option>B-</option>
+                  <option>AB+</option>
+                  <option>AB-</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>الحساسية</label>
+                <input type="text" id="recordAllergy" placeholder="مثال: بنسلين" />
+              </div>
+              <div class="field full">
+                <label>التاريخ المرضي</label>
+                <textarea id="recordHistory" placeholder="مثال: ضغط، سكر، عمليات سابقة"></textarea>
+              </div>
+              <div class="field full">
+                <button type="submit" class="btn btn-primary">حفظ السجل الطبي</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card span-6">
+            <div class="title-row">
+              <h2>السجلات المحفوظة</h2>
+              <button class="btn btn-danger" onclick="clearRecords()">حذف السجلات</button>
+            </div>
+            <div id="recordsList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sick-leave" class="section">
+        <div class="split">
+          <div class="card">
+            <div class="title-row">
+              <h2>طلب إجازة مرضية</h2>
+            </div>
+            <form id="leaveForm">
+              <div class="field">
+                <label>الاسم الكامل</label>
+                <input type="text" id="leaveName" required />
+              </div>
+              <div class="field">
+                <label>جهة العمل</label>
+                <input type="text" id="leaveEmployer" required />
+              </div>
+              <div class="field">
+                <label>من تاريخ</label>
+                <input type="date" id="leaveStart" required />
+              </div>
+              <div class="field">
+                <label>إلى تاريخ</label>
+                <input type="date" id="leaveEnd" required />
+              </div>
+              <div class="field full">
+                <label>سبب الإجازة</label>
+                <textarea id="leaveReason" required></textarea>
+              </div>
+              <div class="field full">
+                <button type="submit" class="btn btn-primary">إصدار الإجازة</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="title-row">
+              <h2>الإجازات المصدرة</h2>
+            </div>
+            <div id="leavesList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports" class="section">
+        <div class="split">
+          <div class="card">
+            <div class="title-row">
+              <h2>إصدار تقرير طبي</h2>
+            </div>
+            <form id="reportForm">
+              <div class="field">
+                <label>اسم المريض</label>
+                <input type="text" id="reportName" required />
+              </div>
+              <div class="field">
+                <label>نوع التقرير</label>
+                <select id="reportType" required>
+                  <option value="">اختر النوع</option>
+                  <option>تقرير معاينة</option>
+                  <option>تقرير تنويم</option>
+                  <option>تقرير أشعة</option>
+                  <option>تقرير مختبر</option>
+                  <option>تقرير إصابة</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>تفاصيل التقرير</label>
+                <textarea id="reportDetails" required></textarea>
+              </div>
+              <div class="field full">
+                <button type="submit" class="btn btn-primary">حفظ التقرير</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="title-row">
+              <h2>التقارير الطبية</h2>
+            </div>
+            <div id="reportsList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vaccines" class="section">
+        <div class="grid">
+          <div class="card span-6">
+            <div class="title-row">
+              <h2>إضافة تطعيم</h2>
+            </div>
+            <form id="vaccineForm">
+              <div class="field">
+                <label>اسم المواطن</label>
+                <input type="text" id="vacName" required />
+              </div>
+              <div class="field">
+                <label>اسم اللقاح</label>
+                <select id="vacNameField" required>
+                  <option value="">اختر اللقاح</option>
+                  <option>كوفيد-19</option>
+                  <option>إنفلونزا موسمية</option>
+                  <option>الكبد الوبائي</option>
+                  <option>الحمى الشوكية</option>
+                  <option>شلل الأطفال</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>رقم الجرعة</label>
+                <select id="vacDose" required>
+                  <option value="">اختر الجرعة</option>
+                  <option>الأولى</option>
+                  <option>الثانية</option>
+                  <option>الثالثة</option>
+                  <option>منشطة</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>تاريخ التطعيم</label>
+                <input type="date" id="vacDate" required />
+              </div>
+              <div class="field full">
+                <button type="submit" class="btn btn-primary">تسجيل التطعيم</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card span-6">
+            <div class="title-row">
+              <h2>سجل التطعيمات</h2>
+            </div>
+            <div id="vaccinesList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ambulance" class="section">
+        <div class="split">
+          <div class="card">
+            <div class="title-row">
+              <h2>طلب إسعاف</h2>
+              <span class="badge danger">عاجل</span>
+            </div>
+            <form id="ambulanceForm">
+              <div class="field">
+                <label>اسم المبلغ</label>
+                <input type="text" id="ambName" required />
+              </div>
+              <div class="field">
+                <label>الموقع</label>
+                <input type="text" id="ambLocation" required placeholder="مثال: حي المطار - الشارع العام" />
+              </div>
+              <div class="field">
+                <label>نوع الحالة</label>
+                <select id="ambType" required>
+                  <option value="">اختر نوع الحالة</option>
+                  <option>حادث مروري</option>
+                  <option>إغماء</option>
+                  <option>نزيف</option>
+                  <option>توقف تنفس</option>
+                  <option>ألم شديد</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>مستوى الخطورة</label>
+                <select id="ambLevel" required>
+                  <option value="">اختر المستوى</option>
+                  <option>منخفض</option>
+                  <option>متوسط</option>
+                  <option>مرتفع</option>
+                  <option>حرج</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label>وصف الحالة</label>
+                <textarea id="ambDesc" required placeholder="اكتب وصفًا مختصرًا للحالة"></textarea>
+              </div>
+              <div class="field full">
+                <button type="submit" class="btn btn-danger">إرسال البلاغ</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="card">
+            <div class="title-row">
+              <h2>بلاغات الإسعاف</h2>
+            </div>
+            <div id="ambulanceList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="employee-login" class="section">
+        <div class="card login-box">
+          <div class="login-header">
+            <h2>بوابة موظفي وزارة الصحة</h2>
+            <div class="muted">تسجيل دخول تجريبي للعبة فقط</div>
+          </div>
+          <form id="employeeForm">
+            <div class="field full">
+              <label>الرقم الوظيفي</label>
+              <input type="text" id="empId" required placeholder="مثال: MOH-2041" />
+            </div>
+            <div class="field full">
+              <label>كلمة المرور</label>
+              <input type="password" id="empPassword" required placeholder="••••••••" />
+            </div>
+            <div class="field full">
+              <label>القسم</label>
+              <select id="empDepartment" required>
+                <option value="">اختر القسم</option>
+                <option>الاستقبال</option>
+                <option>الطوارئ</option>
+                <option>العيادات</option>
+                <option>السجلات الطبية</option>
+                <option>الإدارة</option>
+              </select>
+            </div>
+            <div class="field full">
+              <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+            </div>
+          </form>
+          <div id="employeeLoginResult" class="footer-note">لم يتم تسجيل الدخول بعد</div>
+        </div>
+      </section>
+
     </main>
+  </div>
 
-    <nav class="bottom-nav">
-        <div class="nav-container">
-            <button class="admin-nav-btn" onclick="navigateToAdmin()">
-                <div class="admin-icon">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <div class="admin-nav-text">
-                    <strong>النظام الإداري</strong>
-                    <span>إدارة الطلبات والتحكم الكامل بالنظام</span>
-                </div>
-                <i class="fas fa-angle-left admin-arrow"></i>
-            </button>
-        </div>
-    </nav>
+  <script>
+    const KEYS = {
+      appointments: 'sumou_moh_appointments',
+      records: 'sumou_moh_records',
+      leaves: 'sumou_moh_leaves',
+      reports: 'sumou_moh_reports',
+      vaccines: 'sumou_moh_vaccines',
+      ambulance: 'sumou_moh_ambulance'
+    };
 
-    <script>
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 22 : 40;
+    function getData(key){
+      return JSON.parse(localStorage.getItem(key) || '[]');
+    }
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
+    function setData(key, data){
+      localStorage.setItem(key, JSON.stringify(data));
+      refreshAll();
+    }
 
-                const size = Math.random() * 10 + 4;
-                const color =
-                    i % 3 === 0 ? 'rgba(96,165,250,0.75)' :
-                    i % 3 === 1 ? 'rgba(255,215,0,0.65)' :
-                    'rgba(255,255,255,0.35)';
+    function showSection(id, btn){
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
 
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.background = color;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                particle.style.animationDuration = `${Math.random() * 8 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 6}s`;
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      if(btn) btn.classList.add('active');
+      else {
+        const targetBtn = [...document.querySelectorAll('.nav-btn')].find(b => b.getAttribute('onclick')?.includes(`'${id}'`));
+        if(targetBtn) targetBtn.classList.add('active');
+      }
+    }
 
-                container.appendChild(particle);
-            }
+    function formatDate(date){
+      if(!date) return '-';
+      return new Date(date).toLocaleDateString('ar-SA');
+    }
+
+    function renderEmpty(container, text){
+      container.innerHTML = `<div class="empty">${text}</div>`;
+    }
+
+    function refreshStats(){
+      document.getElementById('statAppointments').textContent = getData(KEYS.appointments).length;
+      document.getElementById('statLeaves').textContent = getData(KEYS.leaves).length;
+      document.getElementById('statReports').textContent = getData(KEYS.reports).length;
+      document.getElementById('statAmbulance').textContent = getData(KEYS.ambulance).length;
+    }
+
+    function renderAppointments(){
+      const data = getData(KEYS.appointments);
+      const wrap = document.getElementById('appointmentsTableWrap');
+
+      if(!data.length){
+        return renderEmpty(wrap, 'لا توجد مواعيد مسجلة حاليًا');
+      }
+
+      wrap.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>الهوية</th>
+              <th>المنشأة</th>
+              <th>التخصص</th>
+              <th>التاريخ</th>
+              <th>الوقت</th>
+              <th>الحالة</th>
+              <th>إجراء</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map((item, i) => `
+              <tr>
+                <td>${item.name}</td>
+                <td>${item.id}</td>
+                <td>${item.facility}</td>
+                <td>${item.dept}</td>
+                <td>${item.date}</td>
+                <td>${item.time}</td>
+                <td><span class="badge pending">بانتظار المراجعة</span></td>
+                <td><button class="btn btn-danger" onclick="deleteItem('${KEYS.appointments}', ${i})">حذف</button></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderRecords(){
+      const data = getData(KEYS.records);
+      const wrap = document.getElementById('recordsList');
+      if(!data.length) return renderEmpty(wrap, 'لا توجد سجلات طبية محفوظة');
+
+      wrap.innerHTML = `<div class="list">${
+        data.map((r, i) => `
+          <div class="item">
+            <strong>${r.name} <span class="badge info">${r.blood || 'غير محدد'}</span></strong>
+            <div class="muted">الهوية: ${r.id}</div>
+            <div>الحساسية: ${r.allergy || 'لا يوجد'}</div>
+            <div>التاريخ المرضي: ${r.history || 'لا يوجد'}</div>
+            <div style="margin-top:10px">
+              <button class="btn btn-danger" onclick="deleteItem('${KEYS.records}', ${i})">حذف</button>
+            </div>
+          </div>
+        `).join('')
+      }</div>`;
+    }
+
+    function renderLeaves(){
+      const data = getData(KEYS.leaves);
+      const wrap = document.getElementById('leavesList');
+      if(!data.length) return renderEmpty(wrap, 'لا توجد إجازات مرضية');
+
+      wrap.innerHTML = `<div class="list">${
+        data.map((l, i) => `
+          <div class="item">
+            <strong>${l.name} <span class="badge success">مصدرة</span></strong>
+            <div class="muted">جهة العمل: ${l.employer}</div>
+            <div>الفترة: من ${l.start} إلى ${l.end}</div>
+            <div>السبب: ${l.reason}</div>
+            <div style="margin-top:10px">
+              <button class="btn btn-danger" onclick="deleteItem('${KEYS.leaves}', ${i})">حذف</button>
+            </div>
+          </div>
+        `).join('')
+      }</div>`;
+    }
+
+    function renderReports(){
+      const data = getData(KEYS.reports);
+      const wrap = document.getElementById('reportsList');
+      if(!data.length) return renderEmpty(wrap, 'لا توجد تقارير طبية');
+
+      wrap.innerHTML = `<div class="list">${
+        data.map((r, i) => `
+          <div class="item">
+            <strong>${r.name} <span class="badge info">${r.type}</span></strong>
+            <div>${r.details}</div>
+            <div class="muted" style="margin-top:8px">تاريخ الإصدار: ${r.createdAt}</div>
+            <div style="margin-top:10px">
+              <button class="btn btn-danger" onclick="deleteItem('${KEYS.reports}', ${i})">حذف</button>
+            </div>
+          </div>
+        `).join('')
+      }</div>`;
+    }
+
+    function renderVaccines(){
+      const data = getData(KEYS.vaccines);
+      const wrap = document.getElementById('vaccinesList');
+      if(!data.length) return renderEmpty(wrap, 'لا توجد تطعيمات مسجلة');
+
+      wrap.innerHTML = `<div class="list">${
+        data.map((v, i) => `
+          <div class="item">
+            <strong>${v.name} <span class="badge success">${v.vaccine}</span></strong>
+            <div>الجرعة: ${v.dose}</div>
+            <div>التاريخ: ${v.date}</div>
+            <div style="margin-top:10px">
+              <button class="btn btn-danger" onclick="deleteItem('${KEYS.vaccines}', ${i})">حذف</button>
+            </div>
+          </div>
+        `).join('')
+      }</div>`;
+    }
+
+    function renderAmbulance(){
+      const data = getData(KEYS.ambulance);
+      const wrap = document.getElementById('ambulanceList');
+      if(!data.length) return renderEmpty(wrap, 'لا توجد بلاغات إسعافية');
+
+      wrap.innerHTML = `<div class="list">${
+        data.map((a, i) => `
+          <div class="item">
+            <strong>${a.name} <span class="badge danger">${a.level}</span></strong>
+            <div>الموقع: ${a.location}</div>
+            <div>نوع الحالة: ${a.type}</div>
+            <div>الوصف: ${a.desc}</div>
+            <div class="muted" style="margin-top:8px">وقت البلاغ: ${a.createdAt}</div>
+            <div style="margin-top:10px">
+              <button class="btn btn-danger" onclick="deleteItem('${KEYS.ambulance}', ${i})">حذف</button>
+            </div>
+          </div>
+        `).join('')
+      }</div>`;
+    }
+
+    function deleteItem(key, index){
+      const data = getData(key);
+      data.splice(index, 1);
+      setData(key, data);
+    }
+
+    function clearAppointments(){
+      if(confirm('هل تريد حذف جميع المواعيد؟')){
+        setData(KEYS.appointments, []);
+      }
+    }
+
+    function clearRecords(){
+      if(confirm('هل تريد حذف جميع السجلات الطبية؟')){
+        setData(KEYS.records, []);
+      }
+    }
+
+    function seedAppointments(){
+      const current = getData(KEYS.appointments);
+      const sample = [
+        {
+          name:'أحمد سالم',
+          id:'10021',
+          city:'الرياض',
+          facility:'مستشفى الملك فهد',
+          dept:'طب عام',
+          type:'زيارة جديدة',
+          date:'2026-04-20',
+          time:'10:30',
+          notes:'أعراض حرارة وإرهاق'
+        },
+        {
+          name:'نواف خالد',
+          id:'10044',
+          city:'جدة',
+          facility:'مركز صحي النخيل',
+          dept:'أسنان',
+          type:'مراجعة',
+          date:'2026-04-22',
+          time:'13:15',
+          notes:'مراجعة علاج سابق'
         }
+      ];
+      setData(KEYS.appointments, current.concat(sample));
+    }
 
-        function updateNotifications() {
-            try {
-                const requests = JSON.parse(localStorage.getItem('identityRequests') || '[]');
-                const pending = requests.filter(req => req.status === 'pending').length;
+    document.getElementById('appointmentForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = getData(KEYS.appointments);
+      data.push({
+        name: apptName.value.trim(),
+        id: apptId.value.trim(),
+        city: apptCity.value,
+        facility: apptFacility.value,
+        dept: apptDept.value,
+        type: apptType.value,
+        date: apptDate.value,
+        time: apptTime.value,
+        notes: apptNotes.value.trim()
+      });
+      setData(KEYS.appointments, data);
+      e.target.reset();
+      showSection('my-appointments');
+      alert('تم تسجيل الموعد بنجاح');
+    });
 
-                const badge = document.getElementById('notificationBadge');
-                if (pending > 0) {
-                    badge.textContent = pending;
-                    badge.style.display = 'flex';
-                } else {
-                    badge.style.display = 'none';
-                }
-            } catch (error) {
-                console.log('لا توجد طلبات بعد');
-            }
-        }
+    document.getElementById('recordForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = getData(KEYS.records);
+      data.push({
+        name: recordName.value.trim(),
+        id: recordId.value.trim(),
+        blood: recordBlood.value,
+        allergy: recordAllergy.value.trim(),
+        history: recordHistory.value.trim()
+      });
+      setData(KEYS.records, data);
+      e.target.reset();
+      alert('تم حفظ السجل الطبي');
+    });
 
-        function navigateTo(url) {
-            document.body.style.opacity = '0.6';
-            setTimeout(() => {
-                window.location.href = url;
-            }, 260);
-        }
+    document.getElementById('leaveForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = getData(KEYS.leaves);
+      data.push({
+        name: leaveName.value.trim(),
+        employer: leaveEmployer.value.trim(),
+        start: leaveStart.value,
+        end: leaveEnd.value,
+        reason: leaveReason.value.trim()
+      });
+      setData(KEYS.leaves, data);
+      e.target.reset();
+      alert('تم إصدار الإجازة المرضية');
+    });
 
-        function navigateToAdmin() {
-            window.location.href = 'admin/login.html';
-        }
+    document.getElementById('reportForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = getData(KEYS.reports);
+      data.push({
+        name: reportName.value.trim(),
+        type: reportType.value,
+        details: reportDetails.value.trim(),
+        createdAt: new Date().toLocaleString('ar-SA')
+      });
+      setData(KEYS.reports, data);
+      e.target.reset();
+      alert('تم حفظ التقرير الطبي');
+    });
 
-        function showCustomAlert(text, type = 'info') {
-            const alertBox = document.createElement('div');
+    document.getElementById('vaccineForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = getData(KEYS.vaccines);
+      data.push({
+        name: vacName.value.trim(),
+        vaccine: vacNameField.value,
+        dose: vacDose.value,
+        date: vacDate.value
+      });
+      setData(KEYS.vaccines, data);
+      e.target.reset();
+      alert('تم تسجيل التطعيم');
+    });
 
-            const bgColor =
-                type === 'info' ? 'linear-gradient(135deg, #2d68c4, #1e3a8a)' :
-                type === 'warning' ? 'linear-gradient(135deg, #ff6b6b, #ff3b3b)' :
-                'linear-gradient(135deg, #00a86b, #047857)';
+    document.getElementById('ambulanceForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const data = getData(KEYS.ambulance);
+      data.push({
+        name: ambName.value.trim(),
+        location: ambLocation.value.trim(),
+        type: ambType.value,
+        level: ambLevel.value,
+        desc: ambDesc.value.trim(),
+        createdAt: new Date().toLocaleString('ar-SA')
+      });
+      setData(KEYS.ambulance, data);
+      e.target.reset();
+      alert('تم إرسال بلاغ الإسعاف');
+    });
 
-            const icon =
-                type === 'info' ? 'fa-info-circle' :
-                type === 'warning' ? 'fa-exclamation-triangle' :
-                'fa-check-circle';
+    document.getElementById('employeeForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const result = document.getElementById('employeeLoginResult');
+      result.innerHTML = `تم تسجيل الدخول بنجاح كموظف في قسم <strong>${empDepartment.value}</strong> بالرقم الوظيفي <strong>${empId.value}</strong>`;
+      alert('تم تسجيل الدخول بنجاح');
+    });
 
-            alertBox.style.cssText = `
-                position: fixed;
-                top: 24px;
-                right: 24px;
-                z-index: 3000;
-                animation: slideInRight 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-            `;
+    function refreshAll(){
+      refreshStats();
+      renderAppointments();
+      renderRecords();
+      renderLeaves();
+      renderReports();
+      renderVaccines();
+      renderAmbulance();
+    }
 
-            alertBox.innerHTML = `
-                <div style="
-                    min-width: 280px;
-                    max-width: 380px;
-                    background: ${bgColor};
-                    color: white;
-                    padding: 16px 18px;
-                    border-radius: 18px;
-                    box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-                    border: 1px solid rgba(255,255,255,0.12);
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    backdrop-filter: blur(14px);
-                ">
-                    <i class="fas ${icon}" style="font-size: 18px;"></i>
-                    <span style="font-size: 14px; line-height: 1.7; flex: 1;">${text}</span>
-                    <button class="close-alert" style="
-                        background: transparent;
-                        border: none;
-                        color: white;
-                        cursor: pointer;
-                        opacity: 0.85;
-                        font-size: 16px;
-                    ">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            `;
-
-            document.body.appendChild(alertBox);
-
-            alertBox.querySelector('.close-alert').addEventListener('click', () => {
-                alertBox.remove();
-            });
-
-            setTimeout(() => {
-                if (alertBox.parentElement) {
-                    alertBox.remove();
-                }
-            }, 4500);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            createParticles();
-            updateNotifications();
-            document.body.style.opacity = '1';
-            setInterval(updateNotifications, 10000);
-        });
-
-        let lastScroll = 0;
-        window.addEventListener('scroll', function () {
-            const currentScroll = window.pageYOffset;
-            const header = document.getElementById('mainHeader');
-
-            if (currentScroll > 15) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-
-            if (currentScroll > lastScroll && currentScroll > 120) {
-                header.style.transform = 'translateY(-110%)';
-            } else {
-                header.style.transform = 'translateY(0)';
-            }
-
-            lastScroll = currentScroll;
-        });
-    </script>
+    refreshAll();
+  </script>
 </body>
 </html>
